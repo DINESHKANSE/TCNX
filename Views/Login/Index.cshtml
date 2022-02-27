@@ -335,29 +335,29 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
 
                                      
 
-                                       function Registration(){ 
-                                           
-                                                        $('#lblmsgbox').hide();
-                                                        if ($('#txtwalletaddress').val().length < 20) {                       
-                                                            regError('Unauthorized Access');                      
-                                                            return false;
-                                                        }
-                                                        else if ($('#txtsponsor').val() == "") {
+                               function Registration()
+                                       { 
+                                            $('#lblmsgbox').hide();
+                                                if ($('#txtwalletaddress').val().length < 20) {                       
+                                                    regError('Unauthorized Access');                      
+                                                    return false;
+                                                }
+                                                else if ($('#txtsponsor').val() == "") {
                         
-                                                            regError('Please Enter Valid Sponsor Id');                                        
-                                                            return false;
-                                                        }                                                   
-                                                        else if ($('#cmbposition').val() == "") {                                                       
-                                                            regError('Please Select Position');                                                    
-                                                            return false;
-                                                        }
-                                                        else {
+                                                    regError('Please Enter Valid Sponsor Id');                                        
+                                                    return false;
+                                                }                                                   
+                                                else if ($('#cmbposition').val() == "") {                                                       
+                                                    regError('Please Select Position');                                                    
+                                                    return false;
+                                                }
+                                                else {
                                                       
-                                                        }
+                                                }
 
-                                                        if ($('#msgallow').val() == "1") {
-                                                                        alert('near data');
-                                                        }
+                                                if ($('#msgallow').val() == "1") {
+                                                                alert('near data');
+                                                }
 
                                                         dataString = new FormData($("#LogForm").get(0));
                                                         if (dataString != '') {
