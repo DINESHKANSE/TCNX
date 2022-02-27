@@ -1,0 +1,281 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+  Layout = null;
+}
+<html lang="en" class="h-100">
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TCNX Coin :Register</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="~/main/images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="~/main/css/style.css" rel="stylesheet">
+    
+   @*  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>*@
+    @* <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+</head>
+
+<body class="h-100">
+    <div id="preloader"><div class="spinner"><div class="spinner-a"></div><div class="spinner-b"></div></div></div>
+    <div class="login-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-md-5">
+                    <div class="form-input-content">
+                        <div class="card card-login">
+                            <div class="card-header text-center d-block">
+                                <a href="index.html">
+                                    <h4 class="mb-0 p-2"><strong>TCNX</strong></h4>
+                                    <h3 class="mb-0 p-3"> Join Us</h3>
+                                </a>
+                            </div>
+                           @* <div class="text-center my-3">
+                                <img class="rounded-circle" src="~/main/images/avatar/11.png" width="80" height="80" alt="">
+                            </div>*@
+                            <div class="card-body">
+                             <form id="LogForm" method="post">
+                                    <div class="form-group mb-4">
+                                        <label>My Address & Balance</label>
+                      
+                                        <table class="table table-bordered responsive">
+                                        <tr >
+                                            <td colspan="2"  >
+                                                 <input id="txtwalletaddress" name="txtwalletaddress"  type="text" class="form-control" placeholder="Wallet Address">
+                                                @* <Label id="txtwalletaddress1" visible="false" name="txtwalletaddress1"></Label>*@
+                                            </td>
+                                        </tr>
+                                         <tr >
+                                            <td class="bg-glass rounded">
+                                               <Label id="MyBalanceTrx" name="MyBalanceTrx">0.0</Label>
+                                               TRX
+                                            </td>
+                                              <td >
+                                               <Label id="MyBalanceTcnx" name="MyBalanceTcnx">0.0</Label>
+                                                TCNX
+                                            </td>
+                                        </tr>
+                                        </table>
+                                        
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <lable>Sponsor & Placement</lable>
+                                         <input id="txtsponsor" name="txtsponsor" value="@TempData["refid"]" text="TCNX" type="text" class="form-control" placeholder="Sponsor ID">                                                 
+                                    </div> 
+                                    <div class="form-group mb-4 bg-blue">
+                                        <lable id="lblsponsor" name="lblsponsor" > Sponsor :  </lable>
+                                             
+                                    </div> 
+                                    <div class="form-group mb-4">
+                                        <lable>Placement</lable>
+                                           <select id="cmbposition" name="cmbposition" class="form-control field">
+                                        <option value="Left">Left</option>
+                                        <option value="Right">Right</option>
+                                    </select>    
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <lable>Package</lable>
+                                        <select id="cmbpackage" name="cmbpackage" class="form-control field">
+                                        <option value="50">50 USD</option>
+                                        <option value="100">150 USD</option>
+                                         <option value="200">200 USD</option>
+                                        <option value="500">500 USD</option>
+                                          <option value="1000">1000 USD</option>
+                                        <option value="2000">2000 USD</option>
+                                         <option value="3000">3000 USD</option>
+                                         <option value="5000">5000 USD</option>
+                                        <option value="10000">10000 USD</option>
+                                    </select>    
+                                    </div>
+                                     <div class="form-group mb-4">
+                                         <label>INVEST 50 USD, SELECT COMBO</label>
+                                        <label id="lblmsg"  style="color:red;background-color:lightcyan;">
+                                             <div class="msgshow"></div>
+                                        </label>
+                                         </div>
+                                   @* <div class="form-group ml-3 mb-5">
+                                        <input id="checkbox1" type="checkbox">
+                                        <label class="label-checkbox ml-2 mb-0" for="checkbox1">Remember Password</label>
+                                    </div>*@
+                                    <button class="btn btn-primary btn-block border-0" id="btnRegSubmit"  type="button"> Join Us</button>
+                                     <a  class="btn btn-outline-success" asp-action="Register" asp-controller="Login"> Login</a>
+                               </form>
+                            </div>
+              <div id="Logloader" class="loader1 collapse" style="display: none;">
+                            @*<img src="~/Content/Login/preloader.gif" style="width: 120px;">*@
+                            <img src="~/Login/preloader3.gif" style="width: 230px;">
+                        </div>        
+
+      @*  <div class="card width-400 myglass">
+<div class="card-img text-center overlap mb-2">
+<img alt="element 06" class="" src="../images/sky.png" width="171" style="border-radius: 61px;">
+</div>
+<div class="card-body">
+<div class="card-block11">
+
+<form role="form" method="post">
+<div class="col-md-12">
+<label> MY ADDRESS &amp; BALANCE</label>
+<div class="small alert bg-transparent myglass text-white border-0 mb-1 p-0 text-center">
+<span id="MyAddress"></span>
+<hr class="m-0">
+<div class=" d-flex">
+<div class="w-50 bg-dark bg-glass rounded" style="margin: 3px;"><span id="MyBalance">0</span> TRX </div>
+<div class="w-50 bg-dark bg-glass rounded" style="margin: 3px;"><span id="MytrxBalance">0</span> CBX</div>
+</div>
+</div>
+</div>
+<div class=" form-group mb-1 col-md-12">
+<label> SPONSOR &amp; Placements</label>
+<div class="form-group input-group mb-1">
+<input type="text" class="form-control" name="sp" value="admin" id="sp" placeholder="sponsor Login" autocomplete="off">
+<div class="input-group-append">
+<button class="btn btn-raised btn-primary  gradient-crystal-clear white border-0" id="GETSponsorNODES" title="Validate Sponsor ID" type="button"><i class="fa fa-search"></i>
+</button>
+</div>
+</div>
+<div id="SponsorResponse" class="form-group mb-0"><div class="alert alert-success my-1 px-1 py-0">
+Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" name="SponsorID" value="2"><div class="alert alert-dark myglass rounded px-1 pt-0  pb-1 border-0 white mb-0">
+<label class="my-0">Placement</label>
+<div class="btn-group my-0 btn-block" role="group">
+<label class="btn btn-sm btn-raised gradient-mint white my-0 btn-block rounded mr-1 border-0"><input class="align-middle" type="radio" name="optionsRadiosInline" id="optionsRadiosInlineA" value="A" checked=""> <i class="fa fa-arrow-left"></i> Left</label>
+<label class="btn btn-sm btn-raised gradient-pomegranate white my-0 btn-block rounded border-0"><input class="align-middle" type="radio" name="optionsRadiosInline" id="optionsRadiosInlineA" value="C">
+<i class="fa fa-arrow-right"></i> Right </label></div></div></div>
+</div>
+<div class=" col-md-12 form-group mb-1">
+<label>Select Package</label>
+<div class="input-group mb-1">
+<select name="pintype" id="cointype" class="form-control inline" selected="">
+<option value="USD50">50 USD</option>
+<option value="USD150">150 USD</option>
+<option value="USD1150">1150 USD</option>
+<option value="USD7200">7200 USD</option>
+</select>
+<div class="input-group-append">
+<button class="btn btn-default gradient-crystal-clear white border-0" id="RefreshPackage" title="Validate Amount" type="button"><i class="fa fa-refresh"></i>
+</button>
+</div>
+</div>
+<div id="PackageResp"><input readonly="" type="hidden" value="776" min="100" max="10000" name="amt" id="amt" required=""><input readonly="" type="hidden" value="0.077881619937695" min="0" max="100" name="amt50cbx" id="amt50cbx" required=""><input readonly="" type="hidden" value="388" min="100" max="10000" name="amt50trx" id="amt50trx" required=""><input readonly="" type="hidden" value="50" name="_package" id="_package" required=""><div class="alert alert-dark myglass rounded px-1 pt-0  pb-1 border-0 white mb-0 text-center">
+<label class="my-0 text-bold-500">INVEST 50 USD, SELECT COMBO</label><div class="btn-group btn-block"><input type="button" name="LoginUser50" id="LoginUser50" value="388TRX + 0.0779CBX" class="btn  btn-sm gradient-crystal-clear btn-block my-0 white border-0 rounded"></div></div></div>
+</div>
+<div class=" col-md-12 form-group mb-1">
+<div id="Response"></div>
+
+</div>
+</form>
+</div>
+</div>
+<div class="card-footer bg-black p-2 py-1">
+<a href="#" id="LoginLink" name="LoginLink" class="btn btn-danger btn-block mb-0">Already User ? LOGIN</a>
+</div>
+</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- #/ container -->
+    <!-- Common JS -->
+    <script src="~/main/vendor/common/common.min.js"></script>
+    <!-- Custom script -->
+    <script src="~/main/js/custom.min.js"></script>
+    <script src="~/main/js/settings.js"></script>
+    <script src="~/main/js/quixnav.js"></script>
+    <script src="~/Login/jquery-3.6.0.min.js"></script>
+  @* <script src="~/Login/jquery-1.7.1.min.js"></script>
+*@
+    <script src="~/Login/js21.js"></script>
+    @*  <script src="~/Login/myforms.js"></script>*@
+
+
+       <script src="~/Login/mylogin.js"></script>
+
+
+   
+     @* <script type="text/javascript">
+            $(document).ready(function() {
+                alert('launch');
+                    
+
+                //      //$("#btnLogSubmit").click(function () {   alert('VClick launch'); });
+
+                //$(document).on('click', '#btnLogSubmit', async () => {
+                //    alert('in the login function');
+                //   // Login();
+                //});
+
+                 });
+           
+        </script>  
+               
+      
+        *@
+   @* <script>
+         $(document).ready(function () {
+             alert('@TempData["exm"]');
+        if (('@TempData["exm"]').length > 2) {
+            //$('#btnModelreg').click();
+
+            
+            $('#txtsponsor').val('@TempData["exm"]');
+        }}
+        </script>*@
+    <script>
+    var obj = setInterval(async () => {
+        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+            var _add = await window.tronWeb.defaultAddress.base58;
+                var _balance = await tronWeb.trx.getBalance(_add);
+                var _hxadd = await tronWeb.address.toHex(_add);
+                $('#txtwalletaddress1').html(_add);
+                $("#txtwalletaddress").val(_add);
+                //$('#txtwalletaddress').html(_add);
+                $('#MyBalanceTrx').html((_balance / 1000000).toFixed(3));
+
+                const CONTRACT = "TAHx3VepqXcUAVSsKccJ56j2ZKMMsPKt3B";
+
+                
+                    try {
+                        const {
+                            abi
+                        } = await tronWeb.trx.getContract(CONTRACT);
+                        const contract = tronWeb.contract(abi.entrys, CONTRACT);
+                        var balance = await contract.methods.balanceOf(_add).call();
+                        balance = balance / 1000000000000000000;
+                        $('#MyBalanceTcnx').html(balance.toFixed(3))
+                    } catch (error) {
+                        console.error("trigger smart contract error", error)
+                    }
+            clearInterval(obj)
+            //var tronweb = window.tronWeb
+            ////document.write("AI Universe : Your tron address:", window.tronWeb.defaultAddress.base58)
+            /////**/
+            //$('#txtwalletaddress').val(tronweb.defaultAddress.base58);    /**/
+            //var _add = tronWeb.defaultAddress.base58;
+            //var _balance =  tronWeb.trx.getBalance(_add);
+            //$('#MyBalanceTrx').val(_balance);
+            //var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', 10000, window.tronWeb.defaultAddress.base58)
+            //var signedTx = awagetit tronweb.trx.sign(tx)
+            //var broastTx = await tronweb.trx.sendRawTransaction(signedTx)
+            //document.write("Yes, catch it:", window.tronWeb.defaultAddress.base58)
+            console.log(broastTx)
+}
+}, 10)
+</script>
+</body>
+
+
+
+</html>

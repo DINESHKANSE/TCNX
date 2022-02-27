@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    @*<meta name="viewport" content="width=device-width" />*@
+    <title>@ViewBag.Title</title>
+     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+   @* <title>Arvid - Bootstrap Cryptocurrency Admin Dashboard HTML Template</title>*@
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="~/main/images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="~/main/vendor/owl.carousel/dist/css/owl.carousel.min.css">
+    <link href="~/main/vendor/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="~/main/vendor/chartist/css/chartist.min.css">
+    <link href="~/main/css/style.css" rel="stylesheet">
+</head>
+<body>
+     <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader"><div class="spinner"><div class="spinner-a"></div><div class="spinner-b"></div></div></div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <div id="main-wrapper">
+
+           <!--**********************************
+            Sidebar start
+        ***********************************-->
+         
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+          <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+             <div class="container">
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+
+              <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed & Developed by <a href="#" target="_blank">TCNX</a> 2022</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+       </div>
+    </div>
+
+      <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="~/main/vendor/common/common.min.js"></script>
+    <script src="~/main/js/custom.min.js"></script>
+    <script src="~/main/js/settings.js"></script>
+    <script src="~/main/js/quixnav.js"></script>
+    <script src="~/main/js/styleSwitcher.js"></script>
+    
+    
+    <!-- ChartJS -->
+    <script src="~/main/vendor/chart.js/Chart.bundle.min.js"></script>
+    <!-- Ticker -->
+    <script src="~/main/vendor/webticker/jquery.webticker.min.js"></script>
+
+    <!--  flot-chart js -->
+    <script src="~/main/vendor/flot/jquery.flot.js"></script>
+    <script src="~/main/vendor/flot/jquery.flot.resize.js"></script>
+
+    <!-- Counter Up -->
+    <script src="~/main/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="~/main/vendor/jquery.counterup/jquery.counterup.min.js"></script>
+
+
+
+    <script src="~/main/js/dashboard/dashboard-1.js"></script>
+</body>
+</html>

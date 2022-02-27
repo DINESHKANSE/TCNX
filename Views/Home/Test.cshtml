@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model PersonModel
+ 
+@{
+    Layout = null;
+}
+ 
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Index</title>
+</head>
+<body>
+      @*@using (Html.BeginForm("CryptoWallet", "Home", FormMethod.Post))
+      {*@
+          @*<form id="frmget">*@
+                <input type="text" id="txtName"/>
+                <input type="submit" id="btnGet" value="Get Current Time1"/>
+                 <input type="button" name="btnLogSubmit" id="btnLogSubmit" value="402TRX + 0.0774CBX" class="btn  btn-sm gradient-crystal-clear btn-block my-0 white border-0 rounded">
+               @*  </form>*@@*   }*@
+  @*  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+   
+     @* <script src="~/Login/jquery-1.7.1.min.js"></script>*@
+     <script src="~/Login/jquery-3.6.0.min.js"></script>
+
+
+     <script type="text/javascript">
+       //  $(document).ready(
+       //     function() {
+       $(document).on('click', '#btnLogSubmit', async () => {
+           alert('here2');
+            $.ajax({
+                type: "POST",
+                //url: "/Login/LoginAjax",
+                url: "~/Login/GetVideoMappings",
+                data: dataString,
+                contentType: false,
+                //dataType: 'json', // expects response as JSON
+                processData: false,
+                success: function (result) {
+                    alert('here after result');
+                    alert(result);
+                    var res = result.split('-');
+                    if (res[0] == "True") {
+                        //alert('hi 1');
+                        window.location = "/User/Index";
+                    }
+                    else {
+                        speech.text = 'Hi,Please enter valid username and password';
+                        window.speechSynthesis.speak(speech);
+                        msgshow(res[1], 'warning');
+                        $('#Logloader').hide();
+                        $('#btnLogSubmit').show();
+                    }
+                },
+                error: function (er) {
+                    //$('#Logloader').hide();
+                    $('#btnLogSubmit').show();
+                    alert(er);
+                    msgshow( er, 'warning');
+
+                }
+            });
+       });
+        //$('#LoginUser50').click(function () {
+        //  alert('here');
+        //});
+        //});
+        //$(document).ready(function () {
+        //    //var ulEmployees = $('#ulEmployees');
+        //    $('#btnGet').click(function () {
+        //    alert('hello)');
+        //      $.ajax({
+        //    type: 'POST',
+        //    url: '/Login/LoginAjax',
+        //     async: true,           
+        //    cache: false,
+        //    dataType: "json",
+        //    contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+        //    data: data,
+        //    success: function (result) {
+        //        alert('Successfully received Data ');
+        //        console.log(result);
+        //    },
+        //    error: function () {
+        //        alert('Failed to receive the Data');
+        //        console.log('Failed ');
+        //    }
+        //})
+        //});
+
+           $("#btnGet").click(function () {
+    alert('in the login function');
+    //Login();
+});
+    </script>
+
+  
+</body>
+</html>

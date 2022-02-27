@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TCNX</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">  
+    <!-- Responsive Meta -->                    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- favicon & bookmark -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"  href="https://sacredthemes.net/coinpool/images/bookmark.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://sacredthemes.net/coinpool/images/favicon.ico" type="image/x-icon" /> 
+    <!-- Font Family -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
+    <!-- Website Title -->
+   
+    <!-- Stylesheets Start -->
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/fontawesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/owl.carousel.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/fancybox/jquery.fancybox.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/slick.css" type="text/css"/>
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/style.css" type="text/css"/>
+    <link rel="stylesheet" href="https://sacredthemes.net/coinpool/css/responsive.css" type="text/css"/>
+     <!-- Stylesheets End -->
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+    <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+    
+</head>
+<body>
+    <!--Header Start -->
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 logo">
+                        <a href="cp-platinum.html" title="Cp Platinum">
+						<h3 class="light" > TCNX </h3>
+                         <!--    <img class="light" src="https://sacredthemes.net/coinpool/images/logo.png" alt="Cp Platinum">
+                            <img class="dark" src="https://sacredthemes.net/coinpool/images/dark-logo.png" alt="Cp Platinum">-->
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-8 main-menu">
+                        <div class="menu-icon">
+                          <span class="top"></span>
+                          <span class="middle"></span>
+                          <span class="bottom"></span>
+                        </div>
+                        <nav class="onepage">
+                            <ul>
+                                <li class="active"><a href="#top">Home</a></li>
+                                <li><a href="#about">About ico</a></li>
+                                <li><a href="#token">token</a></li>
+                                <li><a href="#roadmap">roadmap</a></li>
+                                <li><a href="#team">team</a></li>
+                                <li><a href="#press">press</a></li>
+                                <li class="nav-btn"><a asp-controller="Login" asp-action="Index">Sign In</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--Header End-->
+@*
+    <div class="container">
+        <main role="main" class="pb-3">*@
+            @RenderBody()
+    @*    </main>
+    </div>*@
+
+      <div class="clear"></div>
+      <!--footer Start-->   
+        <footer class="platinum-footer">
+            <div class="footer-widget-area text-center">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-8">
+                            <div class="widget-area">
+                                <div class="widget widget-html">
+                                    <div class="footer-logo">
+                                        <a href="#" title=""><img src="https://sacredthemes.net/coinpool/images/logo.png" alt="Cp Platinum"></a>
+                                    </div>
+                                    <div class="text">
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-area">
+                                <div class="widget">
+                                    <ul class="footer-menu horizontal-menu onepage">
+                                        <li><a href="#about">About ICO</a></li>
+                                        <li><a href="#convertor">Currency Convertor</a></li>
+                                        <li><a href="#token">Token</a></li>
+                                        <li><a href="#roadmap">Roadmap</a></li>
+                                        <li><a href="#team">Team</a></li>
+                                        <li><a href="#press">Media</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="widget-area">
+                                <div class="widget widget-html">
+                                    <h2 class="widget-title">Newsletter</h2>
+                                    <div class="text">
+                                        <p>Keep to date with our progress. Subscribe for e-mail updates.</p>
+                                    </div>
+                                    <div class="newsletter">
+                                        <form method="post">
+                                            <input type="email" name="Email" placeholder="Your email address">
+                                            <button class="btn" name="subscribe">subscribe</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-area">
+                                <div class="widget widget-html text-center">
+                                    <div class="socials">
+                                        <ul>
+                                            <li><a href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="https://twitter.com/"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="https://telegram.org/"><i class="fab fa-telegram-plane"></i></a></li>
+                                            <li><a href="https://bitcoin.com/"><i class="fab fa-btc"></i></a></li>
+                                            <li><a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copy-text">© 2022 TCNX. Design & Developed by <a href="#">Envy Soft</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--footer end-->   
+   <script src="https://sacredthemes.net/coinpool/js/jquery.min.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/circle-progress.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/bootstrap.min.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/onpagescroll.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/wow.min.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/jquery.countdown.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/owl.carousel.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/slick.min.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/Chart.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/chart-function.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/fancybox/jquery.fancybox.min.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/script.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/particles.js"></script>
+    <script src="https://sacredthemes.net/coinpool/js/gold-app.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            setTimeout(function(){
+                jQuery('.platinum-animation').addClass('start-animation');
+            }, 1000);
+            setTimeout(function(){
+                jQuery('.platinum-animation .lines').addClass('active');
+            }, 2000);
+        });
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
