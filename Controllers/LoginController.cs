@@ -375,9 +375,11 @@ namespace TCNX.Controllers
             string OptLeft = "Left";
             OptLeft = frm["cmbposition"].ToString();
             string package = frm["cmbpackage"].ToString();
+            string packagetype = frm["cmbpackagetype"].ToString();
             string cmbGender = "MALE";
             string spon_name = frm["lblsponsor"].ToString();
             string txtspname = frm["lblsponsor"].ToString();
+            string transid = frm["transid"].ToString();
             string txtemail = "user@gmail.com";
             //string txtRemail = frm.Get("txtRemail");
             string txtTranpass = RandomString(6); // frm.Get("txtTrpass"); // RandomString(6); // frm.Get("txtTranpass");
@@ -491,6 +493,16 @@ namespace TCNX.Controllers
 
                 //}
             }
+            var transidcnt = _dbContext.tbltranshistory.Where(x => transid==x.txthash).FirstOrDefault();
+            if(transidcnt != null)
+            {
+                if(transidcnt.txthash.Count() > 0)
+                {
+                    rtnText = "False-Duplicate transaction.This Transaction ID already available in the system.";
+                    return Ok(rtnText);
+                }
+                
+            }
             var packageid = _dbContext.tblpackage.Where(x => x.packageamt == Convert.ToDecimal(package)).FirstOrDefault();
 
 
@@ -565,7 +577,7 @@ namespace TCNX.Controllers
                 //dal.AddParameter("@CLIENTIP", ipaddress, "IN");
                 dal.AddParameter("@PACKAGEID", packageid.packageid, "IN");
                 dal.AddParameter("@PACKAGEAMT", Convert.ToString(packageid.packageamt), "IN");
-                dal.AddParameter("@PLANTYPE", 1, "IN");
+                dal.AddParameter("@PLANTYPE", Convert.ToInt32(packagetype), "IN");
                 dal.AddParameter("@LINKAMT", 0, "IN");
                 dal.AddParameter("@MEMB_CODEX", "", "OUT");
                 dal.AddParameter("@COUNTRY", cmbcountry, "IN");
@@ -586,6 +598,11 @@ namespace TCNX.Controllers
 
                 decimal levelamt = Convert.ToDecimal(packageid.packageamt);
                 var mySid = _dbContext.tblregistration.Where(x => x.mid.ToLower() == regid.ToLower()).FirstOrDefault();
+                dal.ClearParameters();
+
+                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount,txthash) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + (regid.ToUpper()) + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Purchase :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.Activate + ",0,1,'dkimg/slip.png',0,0," + transid + ")";
+                dal.ExecuteNonQuery(Query, ref Message);
+
                 dal.ClearParameters();
                 Query = "Update tblincome set sponcer=CONVERT(float, sponcer)+" + (levelamt) + ",withdraw=CONVERT(float, withdraw)+" + (levelamt) + " where Mid='" + mySid + "'";
                 dal.ExecuteNonQuery(Query, ref Message);

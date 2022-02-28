@@ -79,9 +79,10 @@ namespace TCNX.Controllers
 
         public IActionResult LogOff()
         {
+            string spon_code = "TCNX";
             try
             {
-                string spon_code= userInfo.spon_code;
+                spon_code =userInfo.spon_code;
                 userInfo = null;
                 Common.CurrentUserInfo = userInfo;
                 Common.CookieUserID = "";                
@@ -91,7 +92,7 @@ namespace TCNX.Controllers
             catch (Exception)
             {
 
-                return PartialView("Error");
+                return RedirectToAction("Index", "Login", new { refid = spon_code });
             }
         }
     }
