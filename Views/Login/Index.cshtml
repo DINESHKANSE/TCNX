@@ -85,7 +85,7 @@
                                     </select>    
                                     </div>
                                     <div class="form-group mb-4">
-                                        <lable>Package</lable>
+                                        <lable>Investment</lable>
                                         <select id="cmbpackage" name="cmbpackage" class="form-control field">
                                         <option value="50">50 USD</option>
                                         <option value="100">100 USD</option>
@@ -99,11 +99,11 @@
                                     </select>    
                                     </div>
                                       <div class="form-group mb-4">
-                                        <lable>Package Type</lable>
+                                        <lable>Investment Type</lable>
                                         <select id="cmbpackagetype" name="cmbpackagetype" class="form-control field">
-                                        <option value="1">Regular</option>
+                                        <option value="1">Regular 2x (400 Days)</option>
                                         <option value="2">Staking 2x (200 Days)</option>
-                                         <option value="3">Staking 3x (300 Days)</option>
+                                        <option value="3">Staking 3x (300 Days)</option>
                                         <option value="4">Staking 4x (400 Days)</option>
                                         
                                     </select>    
@@ -135,7 +135,7 @@
                                     <button class="btn btn-success btn-block border-0" id="btnRegSubmit"  type="button"> Join Us</button>
                                </form>
                             </div>
-              <div id="Logloader" name="Logloader" class="loader1 collapse" style="display: none;">
+                    <div id="Logloader" name="Logloader" class="loader1 collapse" style="display: none;">
                             @*<img src="~/Content/Login/preloader.gif" style="width: 120px;">*@
                             <img src="~/Login/preloader.gif" style="width: 230px;">
                         </div>        
@@ -236,14 +236,232 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
     @*  <script src="~/Login/myforms.js"></script>*@
 
 
+
+          <script>
+               $(document).on('click', '#btnRegSubmit', async () => {
+                                                            $('#lblmsgbox').hide();
+                                                            if ($('#txtwalletaddress').val().length < 20) {                       
+                                                                regError('Unauthorized Access');                      
+                                                                return false;
+                                                            }
+                                                            else if ($('#txtsponsor').val() == "") {
+                        
+                                                                regError('Please Enter Valid Sponsor Id');                                        
+                                                                return false;
+                                                            }                                                   
+                                                            else if ($('#cmbposition').val() == "") {                                                       
+                                                                regError('Please Select Position');                                                    
+                                                                return false;
+                                                            }
+                                                            else {
+                                                      
+                                                            }
+
+                                                            if ($('#msgallow').val() == "1") {
+                                                                            //alert('near data');
+                                                            }
+
+                                                	        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+                                                                ////////////////Usdt Smart contract =======
+                                                                ////////////====================================================
+                                                            ////////////////////    const CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+
+                                                            ////////////////////try {
+                                                            ////////////////////    const {
+                                                            ////////////////////        abi
+                                                            ////////////////////    } = await tronWeb.trx.getContract(CONTRACT);
+                                                            ////////////////////    var _add1 = await window.tronWeb.defaultAddress.base58;
+                                                            ////////////////////    const contract = tronWeb.contract(abi.entrys, CONTRACT);
+                                                            ////////////////////    var balance = await contract.methods.balanceOf(_add1).call();
+                                                            ////////////////////    balance = balance / 1000000;
+                                                            ////////////////////    //alert(balance.toFixed(3));
+                                                            ////////////////////} catch (error) {
+                                                            ////////////////////    console.error("trigger smart contract error", error);
+                                                            ////////////////////}
+                                                            ////////====================================================
+                                                           
+                                                                ////$.ajax({
+                                                                ////               type: "GET",
+                                                                ////            cache: false,
+                                                                ////            url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
+                                                                ////            success: function(result) {
+                                                                ////                 alert(result);
+                                                                ////                var trxamt =result['data']['quote']['price'];
+                                                                ////                alert('Trx amt=' + trxamt..toFixed(3));
+                                                                ////            }
+                                                                ////        });
+
+                                                                  
+                                                                var _package = 1000;
+                                                                var _amt = 1000;   
+                                                                 _amt *= 1;
+                                                                $.ajax({
+                                                                        type: "GET",
+                                                                        dataType: "json",
+                                                                        url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
+                                                                        success: function (result) {
+                                                                            regError('Tron' = result.data.quote[0]['price'].toFixed(3));
+                                                                            _amt = result.data.quote[0]['price'].toFixed(3);
+                                                                            _amt *= 1000000;
+                                                                            );
+                                                                        },
+                                                                        error: function (error) {
+
+                                                                            jsonValue = jQuery.parseJSON(error.responseText);
+                                                                            regError("error" + error.responseText);
+                                                                        }
+                                                                    });
+                                                                                                                    
+                                                              
+                                                                var _add = await window.tronWeb.defaultAddress.base58;
+                                                                var _hxadd = await tronWeb.address.toHex(_add);
+                                                                var _balance = await tronWeb.trx.getBalance(_add);
+                                                                //var _sponsor = $("#sp").val();
+                                                                //var _place = $('input[name="optionsRadiosInline"]:checked').val();
+                                                                var tronweb = window.tronWeb;
+                                                                var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', _amt, window.tronWeb
+                                                                    .defaultAddress.base58);
+                                                                var signedTx = await tronweb.trx.sign(tx);
+                                                                var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
+                                                                var trxid = broastTx['transaction']['txID'];
+                                                                regerror(trxid);
+
+                                                                 $('#transid').val(trxid);
+
+                                                               
+                                                                        dataString = new FormData($("#LogForm").get(0));
+                                                                        if (dataString != '') {
+                                                                        $('#preloader').show();
+                                                                        $('#btnLogSubmit').hide();
+                                                                        $('#btnRegSubmit').hide();
+                                                                           alert('near post');
+                                                                        $.ajax({
+                                                                            type: "POST",
+                                                                            url: "/Login/RegisterAjax",
+                                                                            data: dataString,
+                                                                            cache: false,
+                                                                            contentType: false,  ////////////////Not to set any content header  
+                                                                            processData: false,  ////////////////////Not to process data  
+                                                                            success: function (result1) {
+                                                                       
+                                                                                var res = result1.split('-');
+                                                                                if (res[0] == "True") {
+                                                                                    regError(res[1]);
+                                                                                    $('#preloader').hide();
+                                                                                    $('#btnLogSubmit').show();
+                                                                                    $('#btnRegSubmit').show();
+                                                                                    ////window.location = "/Login/RegSuccess/0";
+                                                                                    Login();
+                                                                                }
+                                                                                else {
+                                                                                    regError(res[1]);
+                                                                                    $('#preloader').hide();
+                                                                                    $('#btnLogSubmit').show();
+                                                                                    $('#btnRegSubmit').show();
+                                                                                }
+                                                                            },
+                                                                            error: function (er) {
+                                       
+                                                                                $('#preloader').hide();
+                                                                                $('#btnLogSubmit').show();
+                                                                                $('#btnRegSubmit').show();
+                                                                                regError(er);
+                                                                                }
+                                                                            });
+                                                                        }
+
+                                                                }
+
+                                             });
+
+
+                </script> 
+    <script>
+    var obj = setInterval(async () => {
+        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+            var _add = await window.tronWeb.defaultAddress.base58;
+                var _balance = await tronWeb.trx.getBalance(_add);
+                var _hxadd = await tronWeb.address.toHex(_add);
+                $('#txtwalletaddress1').html(_add);
+                $("#txtwalletaddress").val(_add);
+                //$('#txtwalletaddress').html(_add);
+                $('#MyBalanceTrx').html((_balance / 1000000).toFixed(3));
+
+                const CONTRACT = "TAHx3VepqXcUAVSsKccJ56j2ZKMMsPKt3B";
+
+                
+                    try {
+                        const {
+                            abi
+                        } = await tronWeb.trx.getContract(CONTRACT);
+                        const contract = tronWeb.contract(abi.entrys, CONTRACT);
+                        var balance = await contract.methods.balanceOf(_add).call();
+                        balance = balance / 1000000000000000000;
+                        $('#MyBalanceTcnx').html(balance.toFixed(3));
+                    } catch (error) {
+                        console.error("trigger smart contract error", error);
+                    }
+          
+            //var tronweb = window.tronWeb
+            ////document.write("AI Universe : Your tron address:", window.tronWeb.defaultAddress.base58)
+            /////**/
+            //$('#txtwalletaddress').val(tronweb.defaultAddress.base58);    /**/
+            //var _add = tronWeb.defaultAddress.base58;
+            //var _balance =  tronWeb.trx.getBalance(_add);
+            //$('#MyBalanceTrx').val(_balance);
+            //var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', 10000, window.tronWeb.defaultAddress.base58);
+            //var signedTx = await tronweb.trx.sign(tx);
+            //var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
+            //document.write("Yes, catch it:", window.tronWeb.defaultAddress.base58);
+            //console.log(broastTx);
+                    regerror('For reg check data');
+                   if ($("#txtwalletaddress").val().length >20) 
+                                      {
+                                            regerror('For reg check data');
+                                            $.ajax({
+                                                    type: "GET",
+                                                    dataType: "json",
+                                                    url: "/Login/UserRegister/?walletaddress="+$("#txtwalletaddress").val(),
+                                                    success: function (data) {
+
+                                                         var res = data.split('-');
+                                                        if (res[0] == "True") {
+                                                            //alert('hi 1');
+                                                                $('#btnLogSubmit').show();
+                                                                $('#btnRegSubmit').hide();
+                                                        }
+                                                        else {
+                                                                 $('#btnLogSubmit').hide();
+                                                                 $('#btnRegSubmit').show();
+                                                        }
+                                                       
+                                                        regError(data);
+                                                    },
+                                                    error: function (error) {
+                                                        $('#btnLogSubmit').show();
+                                                        $('#btnRegSubmit').show();
+                                                        jsonValue = jQuery.parseJSON(error.responseText);
+                                                        regError("error" + error.responseText);
+                                                    }
+                                                   });
+                                     }
+              clearInterval(obj);
+                 
+}
+}, 10)
+                                
+                               
+</script>
+
+
            <script type="text/javascript">
 
                         $(document).ready(function() {
                             $('#lblmsgbox').hide();
-                            //let speech = new SpeechSynthesisUtterance();
-                            //speech.lang = 'en';
-                            //speech.text = 'Hi,Welcome to TCNX Dapp Platform.Please login to TCNX Coin based on Tron Blockchain.';
-                            //window.speechSynthesis.speak(speech);
+                            let speech = new SpeechSynthesisUtterance();
+                            speech.lang = 'en';
+                            speech.text = 'Hi,Welcome to TCNX Dapp Platform.Please login to TCNX Coin based on Tron Blockchain.';
+                            window.speechSynthesis.speak(speech);
                                 /*alert('tcnx here')*/;
                                 var valspname = '@TempData["spname"]';
                                 /*alert(valspname)*/;
@@ -255,13 +473,14 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
                                       //$('#lblmsg').html(valspname);
                                 }
                                 $('#preloader').hide();
-                                                
+                                           regError($("#txtwalletaddress").val());
+                              
                         //==End=========                                
                           });
 
                           $(document).on('click', '#btnLogSubmit', async () => {
                                                 if ($('#msgallow').val() == "1") {
-                                                    alert('in the login function');
+                                                    //alert('in the login function');
                                                 }
                                                 Login();
                                             });
@@ -361,168 +580,6 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
 
                 
           </script> 
-
-          <script>
-               $(document).on('click', '#btnRegSubmit', async () => {
-                                                            $('#lblmsgbox').hide();
-                                                            if ($('#txtwalletaddress').val().length < 20) {                       
-                                                                regError('Unauthorized Access');                      
-                                                                return false;
-                                                            }
-                                                            else if ($('#txtsponsor').val() == "") {
-                        
-                                                                regError('Please Enter Valid Sponsor Id');                                        
-                                                                return false;
-                                                            }                                                   
-                                                            else if ($('#cmbposition').val() == "") {                                                       
-                                                                regError('Please Select Position');                                                    
-                                                                return false;
-                                                            }
-                                                            else {
-                                                      
-                                                            }
-
-                                                            if ($('#msgallow').val() == "1") {
-                                                                            alert('near data');
-                                                            }
-
-                                                	        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-
-                                                                const CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-
-                                                            try {
-                                                                const {
-                                                                    abi
-                                                                } = await tronWeb.trx.getContract(CONTRACT);
-                                                                var _add1 = await window.tronWeb.defaultAddress.base58;
-                                                                const contract = tronWeb.contract(abi.entrys, CONTRACT);
-                                                                var balance = await contract.methods.balanceOf(_add1).call();
-                                                                balance = balance / 1000000;
-                                                                alert(balance.toFixed(3));
-                                                            } catch (error) {
-                                                                console.error("trigger smart contract error", error);
-                                                            }
-
-                                                                var _package = 1000;
-                                                                var _amt = 1000;    
-                                                                $.ajax({
-                                                                               type: "GET",
-                                                                            cache: false,
-                                                                            url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
-                                                                            success: function(result) {
-                                                                                 alert(result);
-                                                                                var trxamt =result['data']['quote']['price'];
-                                                                                alert('Trx amt=' + trxamt..toFixed(3));
-                                                                            }
-                                                                        });
-                                                                                                                    
-                                                                //_amt *= 1000000;
-                                                                 _amt *= 1;
-                                                                var _add = await window.tronWeb.defaultAddress.base58;
-                                                                var _hxadd = await tronWeb.address.toHex(_add);
-                                                                var _balance = await tronWeb.trx.getBalance(_add);
-                                                                //var _sponsor = $("#sp").val();
-                                                                //var _place = $('input[name="optionsRadiosInline"]:checked').val();
-                                                                var tronweb = window.tronWeb;
-                                                                var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', _amt, window.tronWeb
-                                                                    .defaultAddress.base58);
-                                                                var signedTx = await tronweb.trx.sign(tx);
-                                                                var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
-                                                                var trxid = broastTx['transaction']['txID'];
-                                                                alert(trxid);
-
-                                                                 $('#transid').val(trxid);
-
-                                                               
-                                                                        dataString = new FormData($("#LogForm").get(0));
-                                                                        if (dataString != '') {
-                                                                        $('#preloader').show();
-                                                                        $('#btnLogSubmit').hide();
-                                                                        $('#btnRegSubmit').hide();
-                                                                           alert('near post');
-                                                                        $.ajax({
-                                                                            type: "POST",
-                                                                            url: "/Login/RegisterAjax",
-                                                                            data: dataString,
-                                                                            cache: false,
-                                                                            contentType: false,  ////////////////Not to set any content header  
-                                                                            processData: false,  ////////////////////Not to process data  
-                                                                            success: function (result1) {
-                                                                       
-                                                                                var res = result1.split('-');
-                                                                                if (res[0] == "True") {
-                                                                                    regError(res[1]);
-                                                                                    $('#preloader').hide();
-                                                                                    $('#btnLogSubmit').show();
-                                                                                    $('#btnRegSubmit').show();
-                                                                                    ////window.location = "/Login/RegSuccess/0";
-                                                                                    Login();
-                                                                                }
-                                                                                else {
-                                                                                    regError(res[1]);
-                                                                                    $('#preloader').hide();
-                                                                                    $('#btnLogSubmit').show();
-                                                                                    $('#btnRegSubmit').show();
-                                                                                }
-                                                                            },
-                                                                            error: function (er) {
-                                       
-                                                                                $('#preloader').hide();
-                                                                                $('#btnLogSubmit').show();
-                                                                                $('#btnRegSubmit').show();
-                                                                                regError(er);
-                                                                                }
-                                                                            });
-                                                                        }
-
-                                                                }
-
-                                             });
-
-
-                </script> 
-    <script>
-    var obj = setInterval(async () => {
-        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-            var _add = await window.tronWeb.defaultAddress.base58;
-                var _balance = await tronWeb.trx.getBalance(_add);
-                var _hxadd = await tronWeb.address.toHex(_add);
-                $('#txtwalletaddress1').html(_add);
-                $("#txtwalletaddress").val(_add);
-                //$('#txtwalletaddress').html(_add);
-                $('#MyBalanceTrx').html((_balance / 1000000).toFixed(3));
-
-                const CONTRACT = "TAHx3VepqXcUAVSsKccJ56j2ZKMMsPKt3B";
-
-                
-                    try {
-                        const {
-                            abi
-                        } = await tronWeb.trx.getContract(CONTRACT);
-                        const contract = tronWeb.contract(abi.entrys, CONTRACT);
-                        var balance = await contract.methods.balanceOf(_add).call();
-                        balance = balance / 1000000000000000000;
-                        $('#MyBalanceTcnx').html(balance.toFixed(3));
-                    } catch (error) {
-                        console.error("trigger smart contract error", error);
-                    }
-          
-            //var tronweb = window.tronWeb
-            ////document.write("AI Universe : Your tron address:", window.tronWeb.defaultAddress.base58)
-            /////**/
-            //$('#txtwalletaddress').val(tronweb.defaultAddress.base58);    /**/
-            //var _add = tronWeb.defaultAddress.base58;
-            //var _balance =  tronWeb.trx.getBalance(_add);
-            //$('#MyBalanceTrx').val(_balance);
-            //var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', 10000, window.tronWeb.defaultAddress.base58);
-            //var signedTx = await tronweb.trx.sign(tx);
-            //var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
-            //document.write("Yes, catch it:", window.tronWeb.defaultAddress.base58);
-            //console.log(broastTx);
-              clearInterval(obj);
-}
-}, 10)
-</script>
 </body>
 
 

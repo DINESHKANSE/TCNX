@@ -348,7 +348,35 @@ namespace TCNX.Controllers
                 return Ok(rtnText);
             }
         }
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IActionResult UserRegister(string walletaddress)
+        {
+            try
+            {
+                String rtnText = "";
+                var chkusr = _dbContext.tblregistration.Where(x => x.tron_add == walletaddress);
+                if (chkusr != null && chkusr.Count() > 0)
+                {
+                    string mid = chkusr.FirstOrDefault().mid;
 
+                    if (!string.IsNullOrEmpty(mid.ToString()))
+                    {
+                        rtnText = "True-Welcome to TCNX.";
+                        return Ok(rtnText);
+                    }
+                }
+               
+                    rtnText = "False-Trx";
+                    return Ok(rtnText);
+                
+            }
+            catch(Exception ex)
+            {
+              
+                return Ok("False-Trx");
+            }
+           
+        }
         [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult RegisterAjax(IFormCollection frm)
         {
