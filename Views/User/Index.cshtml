@@ -6,27 +6,18 @@
 @*
 <h1>Index</h1>*@
 
- <ul style="margin:10px,0px,0px,10px;" class="metismenu" id="menu">
-              
-                <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning" >Home</a>
-
-                 <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning" >My Refferal</a>
-                 <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning" >Team</a>
-                 <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning" >Wallet</a>
-                <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning" >Cashbacks</a> 
-                <a asp-controller="User" asp-action="LogOff" class="btn btn-outline-warning" >Logout</a> 
-
-
-              </ul> 
+ 
 <div class="col-xl-12 col-xxl-12 col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Walet Address</h4>
+                                
                                 <div class="copy-wallet mt-4">
                                     <form action="#">
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                                <h1> @Model.UserID </h1>
+                                                <h2>Username:  @Model.UserID </h2>
+                                               
+                                              <h4 class="card-title">Walet Address</h4>
                                                 <!-- <label>Bitcoin wallet address</label> -->
                                                 <div class="input-group mb-3 mb-md-0">
                                                     <div class="input-group-prepend">
@@ -37,6 +28,8 @@
                                                         <button data-clipboard-target="#input1" class="btn btn-primary btn-flat clipboard-btn" title="Copy to clipboard" type="button" id="button-addon1"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
+                                                <br />
+                                                 <h4>Refferal Link : <span>https://tcnxcoin.com/Login/index?refid=@Model.UserID</span> </h4>
                                             </div>
                                          
                                         </div>
@@ -74,8 +67,9 @@
                                         <div class="row justify-content-between">
                                             <div class="col-auto">
                                                  <h3 class="mb-3"><span  class=" bold btn btn-outline-success" > My Rank :@Model.MyRank</span> </h3>
-                                              
+                                                <h3 class="mb-3 btn btn-outline-danger"><span class="counter">Investment: @Model.MyPackage $</span> TCNX RATE</h3>
                                                  <h3 class="mb-3 btn btn-outline-danger"><span class="counter">@Model.CoinValue $</span> TCNX RATE</h3>
+                                                 
                                             </div>
                                             <div class="col-auto">
                                                 <i class="cc cc ETH-alt" title="ETH"></i>
@@ -201,7 +195,7 @@ MY CLUBS
 <td align="right" class="money">0<sup>%</sup></td>
 <td align="right" class="money">0<sup>%</sup></td>
 
-<td align="center" nowrap="">2021-12-13</td>
+<td align="center" nowrap=""></td>
 </tr>
 <tr class="--">
 <td nowrap="" align="CENTER">2</td>
@@ -216,7 +210,7 @@ MY CLUBS
 <tr class="--">
 <td nowrap="" align="CENTER">3</td>
 <td nowrap="">Tiger</td>
-<td align="right">4</td>
+<td align="right">6</td>
 
 <td align="right" class="money">200<sup>%</sup></td>
 <td align="right" class="money">25<sup>%</sup></td>
@@ -225,7 +219,7 @@ MY CLUBS
 <tr class="--">
 <td nowrap="" align="CENTER">5</td>
 <td nowrap="">Universal Boss</td>
-<td align="right">6</td>
+<td align="right">10</td>
 
 <td align="right" class="money">200<sup>%</sup></td>
 <td align="right" class="money">30<sup>%</sup></td>
@@ -286,7 +280,7 @@ MY TEAM INCENTIVES
                             </div>
                             <div class="card-body">
                                 <div class="chart-wrapper">
-                                    <h3><strong><span class="counter">1.00 $</span> TCNX</strong></h3>
+                                    <h3><strong><span class="counter">@Model.CoinValue $</span> TCNX</strong></h3>
                                     <div id="balance_graph"></div>
                                 </div>
                             </div>

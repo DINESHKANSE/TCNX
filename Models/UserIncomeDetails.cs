@@ -4,6 +4,7 @@
     {
         public string WalletAddress { get; set; } = "";
         public string UserID { get; set; } = "TCNXGUEST";
+        public decimal MyPackage { get; set; } = 0;
         public decimal CoinValue { get; set; } = 0;
         public decimal CoinBalance { get; set; } = 0;
         public decimal TrxBalance { get; set; } = 0;

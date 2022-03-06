@@ -628,18 +628,26 @@ namespace TCNX.Controllers
                 var mySid = _dbContext.tblregistration.Where(x => x.mid.ToLower() == regid.ToLower()).FirstOrDefault();
                 dal.ClearParameters();
 
-                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount,txthash) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + (regid.ToUpper()) + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Purchase :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.Activate + ",0,1,'dkimg/slip.png',0,0," + transid + ")";
+                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount,txthash) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + (regid.ToUpper()) + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Purchase :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.Activate + ",0,1,'dkimg/slip.png',0,0,'" + transid + "')";
                 dal.ExecuteNonQuery(Query, ref Message);
 
                 dal.ClearParameters();
-                Query = "Update tblincome set sponcer=CONVERT(float, sponcer)+" + (levelamt) + ",withdraw=CONVERT(float, withdraw)+" + (levelamt) + " where Mid='" + mySid + "'";
+                Query = "Update tblincome set sponcer=CONVERT(float, sponcer)+" + (levelamt) + ",withdraw=CONVERT(float, withdraw)+" + (levelamt) + " where Mid='" + mySid.sid + "'";
                 dal.ExecuteNonQuery(Query, ref Message);
 
-                int tid = 0;
-                tid = _dbContext.tbltranshistory.Max(x => x.tid);
+                int tid = 1;
+                try
+                {
+                    tid = Convert.ToInt32(dal.ExecuteScaler("select max(tid) from tbltranshistory", ref Message));
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
                 tid = tid + 1;
 
-                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + mySid + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Level Income :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.LevelIncome + ",0,1,'dkimg/slip.png',0,0)";
+                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + mySid.sid + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + ",1,' Refferal Income :" + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + "'," + (int)TrHistoryEnum.LevelIncome + ",0,1,'dkimg/slip.png',0,0)";
                 dal.ExecuteNonQuery(Query, ref Message);
 
                 rtnText = "True-Registration Successfully";
