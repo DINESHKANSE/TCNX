@@ -365,6 +365,27 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
           <script>
                $(document).on('click', '#btnRegSubmit', async () => {
                                     $('#lblmsgbox').hide();
+                                    $.ajax({
+                                                type: "GET",
+                                                cache: false,
+                                                url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
+                                                success: function(result) {
+                                                        alert(result);
+                                                    var trxamt =result['data']['quote']['price'];
+                                                    alert('Trx amt=' + trxamt..toFixed(3));
+                                                }
+                                                        });
+
+                                     $.ajax({
+                                                type: "GET",
+                                                cache: false,
+                                                url: "/Login/GetVideoMappingsAsync",
+                                                success: function(result) {
+                                                        alert(result);
+                                                    //var trxamt =result['data']['quote']['price'];
+                                                    //alert('Trx amt=' + trxamt..toFixed(3));
+                                                }
+                                                        });
                                     if ($('#txtwalletaddress').val().length < 20) {                       
                                         regError('Unauthorized Access');                      
                                         return false;

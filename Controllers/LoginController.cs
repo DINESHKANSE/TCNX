@@ -647,7 +647,7 @@ namespace TCNX.Controllers
                 
                 tid = tid + 1;
 
-                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + mySid.sid + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + ",1,' Refferal Income :" + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + "'," + (int)TrHistoryEnum.LevelIncome + ",0,1,'dkimg/slip.png',0,0)";
+                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + mySid.sid + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + ",1,' Refferal Income :" + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + "'," + (int)TrHistoryEnum.SponsorIncome + ",0,1,'dkimg/slip.png',0,0)";
                 dal.ExecuteNonQuery(Query, ref Message);
 
                 rtnText = "True-Registration Successfully";

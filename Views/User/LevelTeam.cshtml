@@ -1,0 +1,80 @@
+﻿@using System.Data;
+
+@{
+    ViewData["Title"] = "LevelTeam";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>LevelTeam</h1>
+
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <h2>Affliate Team</h2>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-12 text-md-right">
+            <ul class="breadcrumb float-md-right">
+                <li class="breadcrumb-item"><a href="/User/Index"><i class="zmdi zmdi-home"></i>Dashboard</a></li>
+                <span style="color:white;margin-left:1px;margin-right:1px;">/</span>
+                <li style="color:white;margin-left:1px;margin-right:1px;" class="breadcrumb-item active">Update Crypto Address</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <!-- Basic Examples -->
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="body">
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+
+                                    <th>UserName </th>
+                                    <th>Name</th>                                   
+                                    <th>Status</th>
+                                    <th>Reg.Date</th>
+                                    <th>TopupDate</th>
+                                    <th>Topup</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (ViewData["LevelTeam"] != null)
+                                {
+                                    //  int i = 0;
+                                    DataTable dt = (ViewData["LevelTeam"] as System.Data.DataTable);
+                                    if (dt.Rows.Count > 0)
+                                    {
+                                        for (int i = 0; i < dt.Rows.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Convert.ToInt32(i + 1) </td>
+
+                                                <td>@dt.Rows[i]["User_ID"]  </td>
+                                                <td>@dt.Rows[i]["Name"] </td>                                                
+                                                <td>@dt.Rows[i]["Status"] </td>
+                                                <td>@dt.Rows[i]["Joining_Date"] </td>
+                                                <td>@dt.Rows[i]["actdate"] </td>
+                                                <td style="text-align: right">@String.Format("{0:N2}", Convert.ToDouble(dt.Rows[i]["Amount"]))  </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #END# Basic Examples -->
+</div>

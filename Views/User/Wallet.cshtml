@@ -1,0 +1,245 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model UserDashboardDetails;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <h2>Income Wallet </h2>
+        </div>
+
+    </div>
+</div>
+
+<div class="x_content">
+    @if (TempData["Msg"] == "1")
+    {
+        <div class="alert alert-success alert-dismissible fade in" id="divAlertSuccess">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>@TempData["ErrMsg"] </strong>
+        </div>
+
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>@TempData["ErrMsg"] </strong>
+        </div>
+    }
+    else if (TempData["Msg"] == "0")
+    {
+        <div class="alert alert-danger alert-dismissible fade in" id="divAlertDanger" style="color: #fff;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>@TempData["ErrMsg"]  </strong>
+        </div>
+
+        <div class="alert alert-danger" style="color: red;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong style="color: #000">@TempData["ErrMsg"]  </strong>
+        </div>
+    }
+    
+</div>
+
+<div class="container-fluid">
+    <!-- Input -->
+    <div class="row clearfix">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="body">
+
+                    <div id="CPH1_vs1" class="alert alert-block alert-info fade in" style="display: none;">
+                    </div>
+                    @using (Html.BeginForm("WalletBalance", "User", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
+                    {
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                                <tr>
+                                    <td>
+                                       ROI Income
+                                    </td>
+                                    <td>
+                                        @if (@Model.GrowthIncome != null)
+                                        {
+                                            <label>@Model.GrowthIncome</label>
+                                        }
+                                        else
+                                        {
+                                            <label>0</label>
+                                        }
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Affliate Level Income
+                                    </td>
+                                    <td>
+                                        @if (@Model.Levelincome != null)
+                                        {
+                                            <label>@Model.Levelincome</label>
+                                        }
+                                        else
+                                        {
+                                            <label>0</label>
+                                        }
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Affliate Income
+                                    </td>
+                                    <td>
+                                        @if (@Model.SponsorIncome != null)
+                                        {
+                                            <label>@Model.SponsorIncome</label>
+                                        }
+                                        else
+                                        {
+                                            <label>0</label>
+                                        }
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Booster Package Income
+                                    </td>
+                                    <td>
+                                        @if (@Model.BiddingIncome != null)
+                                        {
+                                            <label>@Model.BiddingIncome</label>
+                                        }
+                                        else
+                                        {
+                                            <label>0</label>
+                                        }
+
+                                    </td>
+                                </tr>
+                               <tr>
+                                    <td>
+                                        Staking Withdrawal Income
+                                    </td>
+                                    <td>
+                                        @if (@Model.RechargeIncome != null)
+                                        {
+                                            <label>@Model.RechargeIncome</label>
+                                        }
+                                        else
+                                        {
+                                            <label>0</label>
+                                        }
+
+                                    </td>
+                                </tr>
+                                <tr style="color:aquamarine">
+                                    <td>
+                                        Total Income
+                                    </td>
+                                    <td>
+                                        @if (@Model.TotalIncome != null)
+                                        {
+                                            <label>@Model.TotalIncome</label>
+                                        }
+                                        else
+                                        {
+                                            <label>0</label>
+                                        }
+
+                                    </td>
+                                </tr>
+                                <tr style="color:aquamarine">
+                                    <td>
+                                        Withdrawal Income
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-4">
+                                        <input id="txtwidraamt" name="txtwidraamt" class="form-control"  placeholder="Please enter withdraw amt" type="text" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <div class="form-group mb-4">
+                                        @*<input id="btnwidra" class="btn btn-success btn-block border-0" type="submit" value="Withdraw Fund" />*@
+                                         <button class="btn btn-success btn-block border-0" id="btnwidra"  type="submit"> Withdraw Fund</button>
+                                         </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*   <div class="col-sm-6 col-xxl-6 col-xl-3">
+                                <div class="card stat-widget-one bg-dash">
+                                    <div class="card-body">
+                                        <div class="row justify-content-between">
+                                            <div class="col-auto">
+                                                <h4>
+                                                <table class="table table-responsive">
+                                                    <tr>
+                                                        <td>
+                                                        Total Income
+                                                        </td> 
+                                                        <td> @Model.TotalIncome </td>
+                                                    
+                                                        <td>
+                                                        Cashback Income
+                                                        </td> 
+                                                        <td> @Model.GrowthIncome </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                        Booster Package Income
+                                                        </td> 
+                                                        <td> @Model.BiddingIncome </td>
+                                                   
+                                                        <td>
+                                                        Team Income
+                                                        </td> 
+                                                        <td> @Model.Levelincome </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                        Refferal Income
+                                                        </td> 
+                                                        <td> @Model.SponsorIncome </td>
+                                                    </tr>
+                                                </table>
+                                                </h4>
+                                            
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="cc DASH-alt"></i>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                      
+                                    </div>
+                                </div>
+                            </div>*@

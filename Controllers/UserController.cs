@@ -155,6 +155,7 @@ namespace TCNX.Controllers
             userDashboardDetails.BiddingIncome = Convert.ToDecimal(userincome.bidding) - Convert.ToDecimal(userincome.biddingwd);
             userDashboardDetails.TotalIncome = Convert.ToDecimal(userincome.withdraw) - Convert.ToDecimal(userincome.withdrawwd);
             userDashboardDetails.SponsorIncome = Convert.ToDecimal(userincome.sponcer) - Convert.ToDecimal(userincome.sponcerwd);
+            userDashboardDetails.RechargeIncome = Convert.ToDecimal(userincome.recharge) - Convert.ToDecimal(userincome.recharge);
             userDashboardDetails.UserID = userInfo.username.ToUpper();
             return View(userDashboardDetails);
         }
@@ -290,6 +291,7 @@ namespace TCNX.Controllers
             userDashboardDetails.BiddingIncome = Convert.ToDecimal(userincome.bidding) - Convert.ToDecimal(userincome.biddingwd);
             userDashboardDetails.TotalIncome = Convert.ToDecimal(userincome.withdraw) - Convert.ToDecimal(userincome.withdrawwd);
             userDashboardDetails.SponsorIncome = Convert.ToDecimal(userincome.sponcer) - Convert.ToDecimal(userincome.sponcerwd);
+            userDashboardDetails.RechargeIncome = Convert.ToDecimal(userincome.recharge) - Convert.ToDecimal(userincome.recharge);
             userDashboardDetails.UserID = userInfo.username.ToUpper();
             return RedirectToAction("Wallet", "User");
         }

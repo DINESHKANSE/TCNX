@@ -18,5 +18,7 @@
         public decimal SponsorIncome { get; set; } = 0;
         public decimal Levelincome { get; set; } = 0;
         public decimal BiddingIncome { get; set; } = 0;
+        public decimal RechargeIncome { get; set; } = 0;
+        public decimal RepurchaseIncome { get; set; } = 0;
     }
 }
