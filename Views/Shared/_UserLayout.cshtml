@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
    @* <title>Arvid - Bootstrap Cryptocurrency Admin Dashboard HTML Template</title>*@
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="~/main/images/favicon.png">
+     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" /> 
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="~/main/vendor/owl.carousel/dist/css/owl.carousel.min.css">
     <link href="~/main/vendor/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
@@ -33,19 +33,69 @@
 
                  <a asp-controller="User" asp-action="Refferal" class="btn btn-outline-warning" >My Refferal</a>
                  <a asp-controller="User" asp-action="LevelTeam" class="btn btn-outline-warning" >Team</a>
+                  <a asp-controller="User" asp-action="TopupPackage" class="btn btn-outline-warning" >Topup  </a>
                  <a asp-controller="User" asp-action="Wallet" class="btn btn-outline-warning" >Wallet</a>
-                <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning" >Cashbacks</a> 
+                <a asp-controller="User" asp-action="Report" class="btn btn-outline-warning" >Reports</a> 
                 <a asp-controller="User" asp-action="LogOff" class="btn btn-outline-warning" >Logout</a> 
 
 
               </ul> 
-           <!--**********************************
-            Sidebar start
-        ***********************************-->
-         
+         @*************************************@
+     <!-- <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Navigation</li>
+                    <li>
+                        <a class="has-arrow" asp-controller="User" asp-action="Index" aria-expanded="false">
+                            <i class="mdi mdi-speedometer"></i><span class="nav-text">Home</span>
+                        </a>
+                       @* <ul aria-expanded="false">
+                            <li><a href="index.html">Home One</a></li>
+                            <li><a href="index-2.html">Home Two</a></li>
+                            <li><a href="ico-marketcap.html">Marketcap</a></li>
+                            <li><a href="ico-buy-sell.html">Buy and Sell</a></li>
+                            <li><a href="ico-wallet.html">Wallet</a></li>
+                            <li><a href="ico-exchange.html">Exchange</a></li>
+                            <li><a href="ico-transaction.html">Transaction</a></li>
+                            <li><a href="ico-gateway.html">Gateway</a></li>
+                            <li><a href="ico-trading.html">Trading</a></li>
+                            <li><a href="ico-ticker.html">Ticker</a></li>
+                            
+                        </ul>*@
+                    </li>
+                    
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="nav-text">Team</span></a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="User" asp-action="Refferal">My Refferal</a></li>
+                            <li><a asp-controller="User" asp-action="LevelTeam">My Team</a></li>
+                            
+                        </ul>
+                    </li>
+                    
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="nav-text">Wallet</span></a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="User" asp-action="Wallet">Income Wallet</a></li>
+                            
+                        </ul>
+                    </li>
+                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="mdi mdi-apps"></i><span class="nav-text">Reports</span></a>
+                        <ul aria-expanded="false">
+                            <li><a asp-controller="User" asp-action="Report">My Reports</a></li>
+                            
+                        </ul>
+                    </li>
+                    <li><a asp-controller="User" asp-action="LogOff" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i> <span class="nav-text">Logout</span></a></li>
+                    
+                    
+
+                </ul>
+            </div>
+        </div>-->
+
         <!--**********************************
             Sidebar end
         ***********************************-->
+
 
           <!--**********************************
             Content body start
@@ -53,7 +103,74 @@
         <div class="content-body">
              <div class="container">
                 <div>
+
+
+                    <div class="form-group mb-4">
+    @*@TempData["ErrMsg"]*@
+    @if (TempData["Msg"] == "1")
+    {
+        <div class="alert alert-success alert-dismissible fade in" id="divAlertSuccess">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>@TempData["ErrMsg"] </strong>
+        </div>
+
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>@TempData["ErrMsg"] </strong>
+        </div>
+    }
+    else if (TempData["Msg"] == "0")
+    {
+        <div class="alert alert-danger alert-dismissible fade in" id="divAlertDanger" style="color: #fff;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>@TempData["ErrMsg"]  </strong>
+        </div>
+
+        <div class="alert alert-danger" style="color: red;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong style="color: #000">@TempData["ErrMsg"]  </strong>
+        </div>
+    }
+    
+</div>
+<script src="~/main/vendor/common/common.min.js"></script>
+    <script src="~/main/js/custom.min.js"></script>
+    <script src="~/main/js/settings.js"></script>
+    <script src="~/main/js/quixnav.js"></script>
+    <script src="~/main/js/styleSwitcher.js"></script>
+    
+    <script src="~/Login/jquery-3.6.0.min.js"></script>
+
+    <!-- ChartJS -->
+    <script src="~/main/vendor/chart.js/Chart.bundle.min.js"></script>
+    <!-- Ticker -->
+    <script src="~/main/vendor/webticker/jquery.webticker.min.js"></script>
+
+    <!--  flot-chart js -->
+    <script src="~/main/vendor/flot/jquery.flot.js"></script>
+    <script src="~/main/vendor/flot/jquery.flot.resize.js"></script>
+
+    <!-- Counter Up -->
+    <script src="~/main/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="~/main/vendor/jquery.counterup/jquery.counterup.min.js"></script>
+
+
+
+    <script src="~/main/js/dashboard/dashboard-1.js"></script>
                     @RenderBody()
+
+                    <div id="Logloader" name="Logloader" class="loader1 collapse" style="display: none;">
+                            @*<img src="~/Content/Login/preloader.gif" style="width: 120px;">*@
+                            <img src="~/Login/preloader.gif" style="width: 230px;">
+                        </div>   
                 </div>
             </div>
 
@@ -75,28 +192,34 @@
       <!--**********************************
         Scripts
     ***********************************-->
-    <script src="~/main/vendor/common/common.min.js"></script>
-    <script src="~/main/js/custom.min.js"></script>
-    <script src="~/main/js/settings.js"></script>
-    <script src="~/main/js/quixnav.js"></script>
-    <script src="~/main/js/styleSwitcher.js"></script>
+
+     <script type="text/javascript">
+
+                        //$(document).ready(function() {
+                        //    alert('hello');
+                        //});
+</script>
+
+
+    @*   <script type="text/javascript">
+            function setTempData(v,k) {
+                //var s = document.getElementById("chklist").value;
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Index", "Home")',
+                    data: '{ tempDataValue:"' + v + '",dataflag:"' + k '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    success: function (r) {
+                        alert(r);
+                    },
+                    error: function (r) {
+                        alert(r.responseText);
+                    }
+                });
+            }
+        </script>*@
+
     
-    
-    <!-- ChartJS -->
-    <script src="~/main/vendor/chart.js/Chart.bundle.min.js"></script>
-    <!-- Ticker -->
-    <script src="~/main/vendor/webticker/jquery.webticker.min.js"></script>
-
-    <!--  flot-chart js -->
-    <script src="~/main/vendor/flot/jquery.flot.js"></script>
-    <script src="~/main/vendor/flot/jquery.flot.resize.js"></script>
-
-    <!-- Counter Up -->
-    <script src="~/main/vendor/waypoints/jquery.waypoints.min.js"></script>
-    <script src="~/main/vendor/jquery.counterup/jquery.counterup.min.js"></script>
-
-
-
-    <script src="~/main/js/dashboard/dashboard-1.js"></script>
 </body>
 </html>

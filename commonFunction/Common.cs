@@ -18,8 +18,8 @@ namespace TCNX.commonFunction
 
     public enum TrHistoryEnum
     {
-        Activate = 0,
-        Activate1 = 1,
+        InActive = 0,
+        Activate = 1,
         DPPurchase = 2,
         MFSell = 3,
         HelpLink = 5,
@@ -29,6 +29,7 @@ namespace TCNX.commonFunction
         GrowthIncome = 9,
         GrowthSponsorBonus = 10,
         RepurchaseIncome = 11,
+        RepurchaseSponsorIncome = 12,
         Withdrawal = 20
 
     }

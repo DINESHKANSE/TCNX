@@ -66,8 +66,9 @@
                                     <div class="card-body">
                                         <div class="row justify-content-between">
                                             <div class="col-auto">
-                                                 <h3 class="mb-3"><span  class=" bold btn btn-outline-success" > My Rank :@Model.MyRank</span> </h3>
-                                                <h3 class="mb-3 btn btn-outline-danger"><span class="counter">Investment: @Model.MyPackage $</span> TCNX RATE</h3>
+                                                  <h3 class="mb-3 btn btn-outline-success"><span  class="counter" > My Rank :@Model.MyRank</span> </h3>
+                                                <h3 class="mb-3 btn btn-outline-danger"><span class="counter">Crypto Farm: @Model.MyPackage $</span> </h3>
+                                                <h3 class="mb-3 btn btn-outline-success"><span class="counter">Investment: @Model.MyInvestment $</span> </h3>
                                                  <h3 class="mb-3 btn btn-outline-danger"><span class="counter">@Model.CoinValue $</span> TCNX RATE</h3>
                                                  
                                             </div>
@@ -123,32 +124,95 @@
                                                 <table class="table table-responsive">
                                                     <tr>
                                                         <td>
-                                                        Total Income
-                                                        </td> 
-                                                        <td> @Model.TotalIncome </td>
+                                                            Total Income
+                                                        </td>
+                                                         <td>
+                                                          @if (@Model.TotalIncome != null)
+                                                            {
+                                                                <label>@Model.TotalIncome</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>0</label>
+                                                            }
+                                                             </td>
                                                     
                                                         <td>
-                                                        Cashback Income
-                                                        </td> 
-                                                        <td> @Model.GrowthIncome </td>
+                                                            ROI Income
+                                                        </td>
+                                                         <td>
+                                                          @if (@Model.GrowthIncome != null)
+                                                            {
+                                                                <label>@Model.GrowthIncome</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>0</label>
+                                                            }
+                                                             </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                        Booster Package Income
-                                                        </td> 
-                                                        <td> @Model.BiddingIncome </td>
+                                                          <td>
+                                                            Booster Income
+                                                        </td>
+                                                         <td>
+                                                          @if (@Model.BiddingIncome != null)
+                                                            {
+                                                                <label>@Model.BiddingIncome</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>0</label>
+                                                            }
+                                                             </td>
                                                    
-                                                        <td>
-                                                        Team Income
-                                                        </td> 
-                                                        <td> @Model.Levelincome </td>
+                                                       <td>
+                                                            Level Income
+                                                        </td>
+                                                         <td>
+                                                          @if (@Model.Levelincome != null)
+                                                            {
+                                                                <label>@Model.Levelincome</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>0</label>
+                                                            }
+                                                             </td>
+                                                         
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                        Refferal Income
-                                                        </td> 
-                                                        <td> @Model.SponsorIncome </td>
+                                                            Refferal Income
+                                                        </td>
+                                                         <td>
+                                                          @if (@Model.SponsorIncome != null)
+                                                            {
+                                                                <label>@Model.SponsorIncome</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>0</label>
+                                                            }
+                                                             </td>
+                                                         <td>
+                                                            Staking Withdrawal Income
+                                                        </td>
+                                                        <td>
+                                                            @if (@Model.RechargeIncome != null)
+                                                            {
+                                                                <label>@Model.RechargeIncome</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>0</label>
+                                                            }
+
+                                                            </td>
                                                     </tr>
+                                                    <tr>
+                                   
+                                </tr>
                                                 </table>
                                                 </h4>
                                             
@@ -233,7 +297,7 @@ MY CLUBS
 </div>
 </div>
 </div>
-<div class="col-lg-12">
+@*<div class="col-lg-12">
 <div class="card">
 <div class="card-header   py-0">
 MY TEAM INCENTIVES
@@ -253,7 +317,7 @@ MY TEAM INCENTIVES
 </tbody>
 </table>
 </div>
-</div>
+</div>*@
 </div>
 </div>
 </div>
@@ -330,3 +394,11 @@ MY TEAM INCENTIVES
 }
 }, 10)
 </script>
+
+ @* <script type="text/javascript">
+
+                        $(document).ready(function() {
+                            alert('hello');
+                        });
+
+                        </script>*@

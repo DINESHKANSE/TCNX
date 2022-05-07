@@ -85,6 +85,19 @@ namespace TCNX.Controllers
             userDashboardDetails.TotalIncome = Convert.ToDecimal(userincome.withdraw) - Convert.ToDecimal(userincome.withdrawwd);
             userDashboardDetails.SponsorIncome = Convert.ToDecimal(userincome.sponcer) - Convert.ToDecimal(userincome.sponcerwd);
             userDashboardDetails.UserID = userInfo.username.ToUpper();
+            Query = "select sum(tamount) from tbltranshistory where ttype=" + (int)TrHistoryEnum.DPPurchase + " and givemid ='" + (userInfo.username.ToUpper()) + "'";
+            try
+            {
+                userDashboardDetails.MyInvestment = Convert.ToDecimal(dal.ExecuteScaler(Query, ref Message));
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+
+
+
             try
             {
                 Query = "WITH recursiveBOM  (MID,PID,Mname,packageamt,Position,EDATE,sid,activate,actdate) AS" +
@@ -204,12 +217,21 @@ namespace TCNX.Controllers
             string spon_code = "TCNX";
             try
             {
-                spon_code =userInfo.spon_code;
-                userInfo = null;
-                Common.CurrentUserInfo = userInfo;
-                Common.CookieUserID = "";                
-                var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                return RedirectToAction("Index", "Login", new { refid = spon_code });
+                if (userInfo != null)
+                {
+
+
+                    spon_code = userInfo.spon_code;
+                    userInfo = null;
+                    Common.CurrentUserInfo = userInfo;
+                    Common.CookieUserID = "";
+                    var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    return RedirectToAction("Index", "Login", new { refid = spon_code });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login", new { refid = refid });
+                }
             }
             catch (Exception)
             {
@@ -295,5 +317,81 @@ namespace TCNX.Controllers
             userDashboardDetails.UserID = userInfo.username.ToUpper();
             return RedirectToAction("Wallet", "User");
         }
+
+        public IActionResult TopupPackage()
+        {
+            if (userInfo == null)
+            {
+                return RedirectToAction("Index", "Login", new { refid = refid });
+            }
+            //TempData["Msg"] = "1";
+            //TempData["ErrMsg"] = "Please enter valid amount.";
+            return View();
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public IActionResult TopupPackage(IFormCollection frm)
+        {
+
+            string rtnText = "";
+            if (userInfo == null)
+            {
+                return RedirectToAction("Index", "Login", new { refid = refid });
+            }
+
+            Decimal txtamt = Convert.ToDecimal(frm["txtamt"]);
+            string transid = frm["transid"];
+            string deposittype = frm["cmbdeposittype"];
+            if(deposittype=="1")
+            {
+                deposittype = "TCNX";
+            }
+            else
+            {
+                deposittype = "TRX";
+            }
+            var transidcnt = _dbContext.tbltranshistory.Where(x => transid == x.txthash).FirstOrDefault();
+            if (transidcnt != null)
+            {
+                if (transidcnt.txthash.Count() > 0)
+                {
+                    rtnText = "False-Duplicate transaction.This Transaction ID already available in the system.";
+                    return Ok(rtnText);
+                }
+
+            }
+
+            tbltranshistory transhistory = new tbltranshistory();
+
+            transhistory.orderid = "Invest-T" + @DateTime.Now.ToBinary().ToString().Replace("-", "");
+            //transhistory.order_description = NPDPResponse.order_description;
+            //transhistory.invoice_id = NPDPResponse.id;
+            transhistory.givemid = userInfo.username;
+            transhistory.takemid = userInfo.username;
+            transhistory.tamount = txtamt;
+            transhistory.status = "Investment " + txtamt;
+            transhistory.currency = "TCNX";
+            transhistory.approvedstatus = 1;
+            transhistory.ttype = (int)TrHistoryEnum.DPPurchase;
+            transhistory.imgname = "~/dkimg/slip.png";
+            transhistory.approved_date = Convert.ToDateTime(userInfo.Get_date());
+            transhistory.edate = Convert.ToDateTime(userInfo.Get_date());
+            transhistory.payment_id = transid;
+            _dbContext.tbltranshistory.Add(transhistory);
+
+            _dbContext.SaveChanges();
+            rtnText = "True-Investment Done Successfully.";
+            return Ok(rtnText);
+            //return RedirectToAction("TopupPackage", "User");
+        }
+
+
+        [HttpPost]
+        public void SetTempData(string tempDataValue,string dataflag)
+        {
+            // Set your TempData key to the value passed in
+            TempData["Msg"] = dataflag;
+            TempData["ErrMsg"] = tempDataValue;
+        }
     }
-}
+    }

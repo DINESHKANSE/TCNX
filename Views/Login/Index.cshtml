@@ -14,7 +14,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>TCNX Coin</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="https://sacredthemes.net/coinpool/images/large-c-icon.png">
+    @*<link rel="icon" type="image/png" sizes="16x16" href="https://sacredthemes.net/coinpool/images/large-c-icon.png">*@
+
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" /> 
     <!-- Custom Stylesheet -->
     <link href="~/main/css/style.css" rel="stylesheet">
     
@@ -85,20 +87,16 @@
                                     </select>    
                                     </div>
                                     <div class="form-group mb-4">
-                                        <lable>Investment</lable>
+                                        <lable>Farm Buying Package</lable>
                                         <select id="cmbpackage" name="cmbpackage" class="form-control field">
-                                        <option value="50">50 USD</option>
-                                        <option value="100">100 USD</option>
-                                         <option value="200">200 USD</option>
-                                        <option value="500">500 USD</option>
-                                          <option value="1000">1000 USD</option>
-                                        <option value="2000">2000 USD</option>
-                                         <option value="3000">3000 USD</option>
-                                         <option value="5000">5000 USD</option>
-                                        <option value="10000">10000 USD</option>
+                                        <option value="50">50 USD (0.25 %,1 Bot)</option>
+                                        <option value="100">100 USD (0.50 %,2 Bot)</option>
+                                         <option value="200">200 USD ({0.75%/ 1% / 1.5 %},3 Bot)</option>
+                                       
+                                        
                                     </select>    
                                     </div>
-                                      <div class="form-group mb-4">
+                                     @* <div class="form-group mb-4">
                                         <lable>Investment Type</lable>
                                         <select id="cmbpackagetype" name="cmbpackagetype" class="form-control field">
                                         <option value="1">Regular 2x (400 Days)</option>
@@ -107,7 +105,18 @@
                                         <option value="4">Staking 4x (400 Days)</option>
                                         
                                     </select>    
+                                    </div>*@
+                                 <div class="form-group mb-4">
+                                        <lable>Deposit Type</lable>
+                                        <select id="cmbdeposittype" name="cmbdeposittype" class="form-control field">
+                                        <option value="1">TCNX Coin</option>
+                                        <option value="2">TRX COIN</option>
+                                       
+                                        
+                                    </select>    
                                     </div>
+
+
                                      <div class="form-group mb-4">
                                          <label>INVEST 50 USD, SELECT COMBO</label>
                                         @*<label id="lblmsg"  style="color:red;background-color:lightcyan;">
@@ -239,6 +248,7 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
      <script type="text/javascript">
 
                         $(document).ready(function() {
+                             regError('Login click');
                             $('#lblmsgbox').hide();
                             //let speech = new SpeechSynthesisUtterance();
                             //speech.lang = 'en';
@@ -363,29 +373,30 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
                 
           </script> 
           <script>
+            
+              function getPriceData(ajaxurl) { 
+                                                         
+};
+
+
+
+
                $(document).on('click', '#btnRegSubmit', async () => {
                                     $('#lblmsgbox').hide();
-                                    $.ajax({
-                                                type: "GET",
-                                                cache: false,
-                                                url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
-                                                success: function(result) {
-                                                        alert(result);
-                                                    var trxamt =result['data']['quote']['price'];
-                                                    alert('Trx amt=' + trxamt..toFixed(3));
-                                                }
-                                                        });
-
-                                     $.ajax({
-                                                type: "GET",
-                                                cache: false,
-                                                url: "/Login/GetVideoMappingsAsync",
-                                                success: function(result) {
-                                                        alert(result);
-                                                    //var trxamt =result['data']['quote']['price'];
-                                                    //alert('Trx amt=' + trxamt..toFixed(3));
-                                                }
-                                                        });
+                                    var _amt = 1000;           
+                                                       
+                                                        regError('here after  api call');
+                                                        //return false;
+                                     //$.ajax({
+                                     //           type: "GET",
+                                     //           cache: false,
+                                     //           url: "/Login/GetVideoMappingsAsync",
+                                     //           success: function(result) {
+                                     //                   alert(result);
+                                     //               //var trxamt =result['data']['quote']['price'];
+                                     //               //alert('Trx amt=' + trxamt..toFixed(3));
+                                     //           }
+                                     //                   });
                                     if ($('#txtwalletaddress').val().length < 20) {                       
                                         regError('Unauthorized Access');                      
                                         return false;
@@ -403,6 +414,37 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
                                                       
                                     }
 
+                                                var packageamt =$("#cmbpackage").val();        
+                                                var deposittype =$("#cmbdeposittype").val();  
+                                                var _packageinr = packageamt * 80;
+                                                _packageinr = _packageinr + 160;
+                                              
+                                              // var apiurl ="https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount=" + _packageinr + "&convert_id=1958&id=2796";                 
+                                              //_amt = await getPriceData(apiurl);
+
+                                              $.ajax({
+                                                            type: "GET",
+                                                            cache: false,
+                                                            ////url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
+                                                            url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount=" + _packageinr + "&convert_id=1958&id=2796",
+                                                            //url: ajaxurl,
+                                                            success: function(result1) {
+                                                                  regError
+                                                                  (' in api');
+                                                                    //alert(result1);
+                                                                var trxamt =result1['data']['quote'][0]['price'].toFixed(3);
+                                                                trxamt = result1['data']['quote'][0]['price'].toFixed(3);
+                                                                 trxamt *= 1000000;
+                                                                 _amt = trxamt;
+                                                                regError('Trx amt=' + trxamt);
+                                                                return trxamt;
+                                                            },
+                                                            error: function (er) {
+                                                                   regError('Something went Wrong! Please Try again');
+                                                                  }
+                                                         });
+                                                regError('after api call amt' + _amt);
+                                                    //regError(packageamt);
                                     //if ($('#msgallow').val() == "1") {
                                     //                alert('near data');
                                     //}
@@ -412,207 +454,300 @@ Sponsor : Admin <a href="#" class="alert-link"></a></div><input type="hidden" na
                                     if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
                                         ////////////////Usdt Smart contract =======
                                         ////////////====================================================
-                                    ////////////////////    const CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+                                            regError(deposittype);
 
-                                    ////////////////////try {
-                                    ////////////////////    const {
-                                    ////////////////////        abi
-                                    ////////////////////    } = await tronWeb.trx.getContract(CONTRACT);
-                                    ////////////////////    var _add1 = await window.tronWeb.defaultAddress.base58;
-                                    ////////////////////    const contract = tronWeb.contract(abi.entrys, CONTRACT);
-                                    ////////////////////    var balance = await contract.methods.balanceOf(_add1).call();
-                                    ////////////////////    balance = balance / 1000000;
-                                    ////////////////////    //alert(balance.toFixed(3));
-                                    ////////////////////} catch (error) {
-                                    ////////////////////    console.error("trigger smart contract error", error);
-                                    ////////////////////}
-                                    ////////====================================================
+                                            if(deposittype === "1")
+                                            {
+                                                                regError('Here for tcnx payment mode.');
+                                                                await sleep(2000);
+                                                                var tronweb = window.tronWeb;
+                                    //                                                
+                                                                const CONTRACT = "TRQkNGLtEe675dyupHPXQmr6Eq7A7BiPWS";
 
+                                                                try {
+                                                                    const {
+                                                                        abi
+                                                                    } = await tronWeb.trx.getContract(CONTRACT);
+                                                                    var _add1 = await window.tronWeb.defaultAddress.base58;
+                                                                    const contract = tronWeb.contract(abi.entrys, CONTRACT);
+                                                                    var balance = await contract.methods.balanceOf(_add1).call();
+                                                                    balance = balance / 1000000;
+                                                                    regError(balance.toFixed(3));
+                                                   
+                                                
+                                                                    const ACCOUNT = "TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4";
+                                                                    var receiverAddress = 'TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4';
+                                                   
+                                                                    //amount *= 1000000000000000000;
+                                                                    const num = _packageinr * Math.pow(10, 6);
+                                                                    const numAsHex = "0x" + num.toString(16);
+                                                  
+                                                                        let instance = await tronWeb.contract().at(CONTRACT);
 
-                                            //$.ajax({
-                                            //            type: "GET",
-                                            //        cache: false,
-                                            //        url: "/Login/UserRegister/?walletaddress='kljhjkloahd'",
-                                            //        success: function(result) {
-                                            //                regError(result);
+                                                                        instance["Transfer"]().watch((err, eventResult) => {
+                                                                            if (err) {
+                                                                                return console.error('Error with "method" event:', err);
+                                                                            }
+                                                                            if (eventResult) {
+                                                                                console.log('eventResult:', eventResult);
+                                                                            }
+                                                                        });
+                                                                         
+                                                                        let res = await instance.transfer(ACCOUNT, numAsHex).send({});
+
+                                                                         $('#transid').val(res);
+
+                                                                         regError(res);
+
+                                                                        dataString = new FormData($("#LogForm").get(0));
+                                                                                                    if (dataString != '') {
+                                                                                                    $('#preloader').show();
+                                                                                                    $('#btnLogSubmit').hide();
+                                                                                                    $('#btnRegSubmit').hide();
+                                                                                                        regError('near post');
+                                                                                                    $.ajax({
+                                                                                                        type: "POST",
+                                                                                                        url: "/Login/RegisterAjax",
+                                                                                                        data: dataString,
+                                                                                                        cache: false,
+                                                                                                        contentType: false,  //////////////Not to set any content header  
+                                                                                                        processData: false,  //////////////////Not to process data  
+                                                                                                        success: function (result1) {
+                                                                       
+                                                                                                            var res = result1.split('-');
+                                                                                                            if (res[0] == "True") {
+                                                                                                                regError(res[1]);
+                                                                                                                $('#preloader').hide();
+                                                                                                                $('#btnLogSubmit').show();
+                                                                                                                $('#btnRegSubmit').show();
+                                                                                                                //window.location = "/Login/RegSuccess/0";
+                                                                                                                Login();
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                regError(res[1]);
+                                                                                                                $('#preloader').hide();
+                                                                                                                $('#btnLogSubmit').show();
+                                                                                                                $('#btnRegSubmit').show();
+                                                                                                            }
+                                                                                                        },
+                                                                                                        error: function (er) {
+                                       
+                                                                                                            $('#preloader').hide();
+                                                                                                            $('#btnLogSubmit').show();
+                                                                                                            $('#btnRegSubmit').show();
+                                                                                                            regError(er);
+                                                                                                            }
+                                                                                                        });
+                                                                                        }
+               
+                                                                  } catch (error) {
+                                                                             return false;
+                                                                         regError("Something went wrong.please check and try again.");
+                                                                            //console.error("trigger smart contract error", error);
+                                                                            }
+                                    //    ////////====================================================
+
+                                            }
+                                            else{ 
+
+                                       
+                                                regError('Here for trx payment mode.');
+                                    //            //$.ajax({
+                                    //            //            type: "GET",
+                                    //            //        cache: false,
+                                    //            //        url: "/Login/UserRegister/?walletaddress='kljhjkloahd'",
+                                    //            //        success: function(result) {
+                                    //            //                regError(result);
                                                                                
                                                                               
-                                            //        },
-                                            //        error: function (er) {
+                                    //            //        },
+                                    //            //        error: function (er) {
                                        
-                                            //            regError(er);
-                                            //            }
-                                            //    });
+                                    //            //            regError(er);
+                                    //            //            }
+                                    //            //    });
 
 
-                                                ////$.ajax({
-                                                ////               type: "GET",
-                                                ////            cache: false,
-                                                ////            url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
-                                                ////            success: function(result) {
-                                                ////                 alert(result);
-                                                ////                var trxamt =result['data']['quote']['price'];
-                                                ////                alert('Trx amt=' + trxamt..toFixed(3));
-                                                ////            }
-                                                ////        });
+                                    //                ////$.ajax({
+                                    //                ////               type: "GET",
+                                    //                ////            cache: false,
+                                    //                ////            url: "https://api.coinmarketcap.com/data-api/v3/tools/price-conversion?amount="+ ($("#cmbpackage").val() + 2) +"&convert_id=1958&id=2781",
+                                    //                ////            success: function(result) {
+                                    //                ////                 alert(result);
+                                    //                ////                var trxamt =result['data']['quote']['price'];
+                                    //                ////                alert('Trx amt=' + trxamt..toFixed(3));
+                                    //                ////            }
+                                    //                ////        });
 
-                                                                  
-                                                var _package = 1000;
-                                                var _amt = 1000; 
-                                                                
+                                              
+                                    //                    //if(packageamt = "10000")
+                                    //                    //{
+                                    //                    //    _amt=163670.15;
+                                    //                    //}
+                                    //                    //else if(packageamt = "5000")
+                                    //                    //{
+                                    //                    //     _amt=81847.35;
+                                    //                    //}
+                                    //                    //else if(packageamt = "3000")
+                                    //                    //{
+                                    //                    //     _amt= 49118.23;
+                                    //                    //}
+                                    //                    //else if(packageamt = "2000")
+                                    //                    //{
+                                    //                    //    _amt= 32753.67;
+                                    //                    //}
+                                    //                    //else if(packageamt = "1000")
+                                    //                    //{
+                                    //                    //    _amt = 16389.11;
+                                    //                    //}
+                                    //                    //else if(packageamt = "500")
+                                    //                    //{
+                                    //                    //    _amt = 8206.83;
+                                    //                    //}
+                                    //                    //else if(packageamt = "200")
+                                    //                    //{
+                                    //                    //     _amt = 3297.46;
+                                    //                    //}
+                                    //                    //else if(packageamt = "100")
+                                    //                    //{
+                                    //                    //      _amt =1661.00;
+                                    //                    //}
+                                    //                    //else if(packageamt = "50")
+                                    //                    //    _amt =842.77;
+                                    //                    //}
+                                    //                    //else
+                                    //                    //{
+                                    //                    //      regError('Unauthorized Access.Please select package');                      
+                                    //                    //       return false;
+                                    //                    //}
 
-                                                    var packageamt =$("#cmbpackage").val();
-                                                    regError(packageamt);
-                                                    //if(packageamt = "10000")
-                                                    //{
-                                                    //    _amt=163670.15;
-                                                    //}
-                                                    //else if(packageamt = "5000")
-                                                    //{
-                                                    //     _amt=81847.35;
-                                                    //}
-                                                    //else if(packageamt = "3000")
-                                                    //{
-                                                    //     _amt= 49118.23;
-                                                    //}
-                                                    //else if(packageamt = "2000")
-                                                    //{
-                                                    //    _amt= 32753.67;
-                                                    //}
-                                                    //else if(packageamt = "1000")
-                                                    //{
-                                                    //    _amt = 16389.11;
-                                                    //}
-                                                    //else if(packageamt = "500")
-                                                    //{
-                                                    //    _amt = 8206.83;
-                                                    //}
-                                                    //else if(packageamt = "200")
-                                                    //{
-                                                    //     _amt = 3297.46;
-                                                    //}
-                                                    //else if(packageamt = "100")
-                                                    //{
-                                                    //      _amt =1661.00;
-                                                    //}
-                                                    //else if(packageamt = "50")
-                                                    //    _amt =842.77;
-                                                    //}
-                                                    //else
-                                                    //{
-                                                    //      regError('Unauthorized Access.Please select package');                      
-                                                    //       return false;
-                                                    //}
+                                    //                            //switch (packageamt) {
+                                    //                            //    case "10000":
+                                    //                            //        _amt = 179117.14;
+                                    //                            //    break;
+                                    //                            //    case "5000":
+                                    //                            //    _amt = 89576.48;
+                                    //                            //    break;
+                                    //                            //    case "3000":
+                                    //                            //        _amt = 53760.21;
+                                    //                            //    break;
+                                    //                            //    case "2000":
+                                    //                            //    _amt= 35852.08;
+                                    //                            //    break;
+                                    //                            //    case "1000":
+                                    //                            //    _amt = 17943.95;
+                                    //                            //    break;
+                                    //                            //    case "500":
+                                    //                            //    _amt = 8989.88;
+                                    //                            //    break;
+                                    //                            //    case "200":
+                                    //                            //    _amt = 3617.44;
+                                    //                            //        break;
+                                    //                            //    case "100":
+                                    //                            //    _amt = 1826.63;
+                                    //                            //    break;
+                                    //                            //    case "50":
+                                    //                            //    _amt = 931.22;
+                                    //                            //    //_amt = 220.77;
+                                    //                            //    regError(_amt);
+                                    //                            //        break;
+                                    //                            //}
+                                    //                    //_amt *= 1000000;
+                                    //                    //       _amt = 1000000;       
+                                                        //regError('Total TRX ' + _amt);
+                                                       
 
-                                                            switch (packageamt) {
-                                                                case "10000":
-                                                                    _amt = 179117.14;
-                                                                break;
-                                                                case "5000":
-                                                                _amt = 89576.48;
-                                                                break;
-                                                                case "3000":
-                                                                    _amt = 53760.21;
-                                                                break;
-                                                                case "2000":
-                                                                _amt= 35852.08;
-                                                                break;
-                                                                case "1000":
-                                                                _amt = 17943.95;
-                                                                break;
-                                                                case "500":
-                                                                _amt = 8989.88;
-                                                                break;
-                                                                case "200":
-                                                                _amt = 3617.44;
-                                                                    break;
-                                                                case "100":
-                                                                _amt = 1826.63;
-                                                                break;
-                                                                case "50":
-                                                                _amt = 931.22;
-                                                                //_amt = 220.77;
-                                                                regError(_amt);
-                                                                    break;
-                                                            }
-                                                    _amt *= 1000000;
-                                                    //       _amt = 1000000;       
-                                                    //regError('Total TRX ' + _amt);
-                                                                                                                    
-                                                var tronweb = window.tronWeb;
-                                                var _add = await window.tronWeb.defaultAddress.base58;
-                                                 regError('Total TRX ' + _add );
-                                                 if(_add === "TN4P1vaEyripiaVbFPc2fN1tTQoQDLmJyM")
-                                                {
-                                                    _amt = 1000;
-                                                }
+                                                        await sleep(2000);
+                                                                            try {                                                                  
+                                                                                    var tronweb = window.tronWeb;
+                                                                                    var _add = await window.tronWeb.defaultAddress.base58;
+                                                                                     regError('Total TRX ' + _add );
+                                                                                     if(_add === "TN4P1vaEyripiaVbFPc2fN1tTQoQDLmJyM")
+                                                                                    {
+                                                                                        _amt = 1000;
+                                                                                    }
                                                
-                                                regError('Total TRX ' + _amt );
-                                                var _hxadd = await tronWeb.address.toHex(_add);
-                                                var _balance = await tronWeb.trx.getBalance(_add);
-                                                //var _sponsor = $("#sp").val();
-                                                //var _place = $('input[name="optionsRadiosInline"]:checked').val();
+                                                                                    regError('Total TRX ' + _amt );
+                                                                                    var _hxadd = await tronWeb.address.toHex(_add);
+                                                                                    var _balance = await tronWeb.trx.getBalance(_add);
+                                                                                    var _sponsor = $("#sp").val();
+                                                                                    var _place = $('input[name="optionsRadiosInline"]:checked').val();
                                                
                                                                   
-                                                regError('Balance  ' + _balance +', Requestd =' + _amt  );
-                                                var tx = await tronweb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', _amt, window.tronWeb
-                                                    .defaultAddress.base58);
-                                                var signedTx = await tronweb.trx.sign(tx);
-                                                var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
-                                                //regError('here transaction done');
-                                                var trxid = broastTx['transaction']['txID'];
-                                                //regError('here transaction done 2');
-                                                //regError(trxid);
+                                                                                    regError('Balance  ' + _balance +', Requestd =' + _amt  );
+                                                                                    var tx = await tronWeb.transactionBuilder.sendTrx('TQJGCyiaib3VuVFUVxd1r4xSCkouNVizS4', _amt, window.tronWeb
+                                                                                        .defaultAddress.base58);
+                                                                                    var signedTx = await tronweb.trx.sign(tx);
+                                                                                    var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
+                                                                                    regError('here transaction done');
+                                                                                    var trxid = broastTx['transaction']['txID'];
+                                                                                    regError('here transaction done 2');
+                                                                                    regError(trxid);
 
-                                                    $('#transid').val(trxid);
+                                                                                        $('#transid').val(trxid);
 
-                                                               
-                                                        dataString = new FormData($("#LogForm").get(0));
-                                                        if (dataString != '') {
-                                                        $('#preloader').show();
-                                                        $('#btnLogSubmit').hide();
-                                                        $('#btnRegSubmit').hide();
-                                                            //regError('near post');
-                                                        $.ajax({
-                                                            type: "POST",
-                                                            url: "/Login/RegisterAjax",
-                                                            data: dataString,
-                                                            cache: false,
-                                                            contentType: false,  ////////////////Not to set any content header  
-                                                            processData: false,  ////////////////////Not to process data  
-                                                            success: function (result1) {
+                                                                                        dataString = new FormData($("#LogForm").get(0));
+                                                                                        if (dataString != '') {
+                                                                                        $('#preloader').show();
+                                                                                        $('#btnLogSubmit').hide();
+                                                                                        $('#btnRegSubmit').hide();
+                                                                                            regError('near post');
+                                                                                        $.ajax({
+                                                                                            type: "POST",
+                                                                                            url: "/Login/RegisterAjax",
+                                                                                            data: dataString,
+                                                                                            cache: false,
+                                                                                            contentType: false,  //////////////Not to set any content header  
+                                                                                            processData: false,  //////////////////Not to process data  
+                                                                                            success: function (result1) {
                                                                        
-                                                                var res = result1.split('-');
-                                                                if (res[0] == "True") {
-                                                                    regError(res[1]);
-                                                                    $('#preloader').hide();
-                                                                    $('#btnLogSubmit').show();
-                                                                    $('#btnRegSubmit').show();
-                                                                    ////window.location = "/Login/RegSuccess/0";
-                                                                    Login();
-                                                                }
-                                                                else {
-                                                                    regError(res[1]);
-                                                                    $('#preloader').hide();
-                                                                    $('#btnLogSubmit').show();
-                                                                    $('#btnRegSubmit').show();
-                                                                }
-                                                            },
-                                                            error: function (er) {
+                                                                                                var res = result1.split('-');
+                                                                                                if (res[0] == "True") {
+                                                                                                    regError(res[1]);
+                                                                                                    $('#preloader').hide();
+                                                                                                    $('#btnLogSubmit').show();
+                                                                                                    $('#btnRegSubmit').show();
+                                                                                                    //window.location = "/Login/RegSuccess/0";
+                                                                                                    Login();
+                                                                                                }
+                                                                                                else {
+                                                                                                    regError(res[1]);
+                                                                                                    $('#preloader').hide();
+                                                                                                    $('#btnLogSubmit').show();
+                                                                                                    $('#btnRegSubmit').show();
+                                                                                                }
+                                                                                            },
+                                                                                            error: function (er) {
                                        
-                                                                $('#preloader').hide();
-                                                                $('#btnLogSubmit').show();
-                                                                $('#btnRegSubmit').show();
-                                                                regError(er);
-                                                                }
-                                                            });
-                                                        }
+                                                                                                $('#preloader').hide();
+                                                                                                $('#btnLogSubmit').show();
+                                                                                                $('#btnRegSubmit').show();
+                                                                                                regError(er);
+                                                                                                }
+                                                                                            });
+                                                                                        }
+                                                                                     } catch (error){
+                                                                                            regError("Something went wrong.please check and try again.");
+                                                                                            //regError("trigger smart contract error" + error);
+                                                                                            return false;
+                                                                                            }
+
+                                                                  
 
                                                 }
+                                                               
+                                                        
 
-                                    });
+                                    }
+                                              
 
+                                        
 
+                     });
+
+                     function sleep(ms) {
+                      return new Promise(resolve => setTimeout(resolve, ms));
+                    }
                 </script> 
     <script>
     var obj = setInterval(async () => {

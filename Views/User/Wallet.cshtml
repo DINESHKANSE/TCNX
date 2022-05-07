@@ -17,41 +17,7 @@
     </div>
 </div>
 
-<div class="x_content">
-    @if (TempData["Msg"] == "1")
-    {
-        <div class="alert alert-success alert-dismissible fade in" id="divAlertSuccess">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <strong>@TempData["ErrMsg"] </strong>
-        </div>
 
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <strong>@TempData["ErrMsg"] </strong>
-        </div>
-    }
-    else if (TempData["Msg"] == "0")
-    {
-        <div class="alert alert-danger alert-dismissible fade in" id="divAlertDanger" style="color: #fff;">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <strong>@TempData["ErrMsg"]  </strong>
-        </div>
-
-        <div class="alert alert-danger" style="color: red;">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <strong style="color: #000">@TempData["ErrMsg"]  </strong>
-        </div>
-    }
-    
-</div>
 
 <div class="container-fluid">
     <!-- Input -->
@@ -102,7 +68,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Affliate Income
+                                        Affliate/Direct Income
                                     </td>
                                     <td>
                                         @if (@Model.SponsorIncome != null)

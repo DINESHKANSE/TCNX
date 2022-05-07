@@ -32,6 +32,8 @@ namespace TCNX.Controllers
         SqlDblayer dal = new SqlDblayer();
         private string Query = "";
         private string Message = "";
+        decimal levelamt = 0;
+        int level = 0;
         public LoginController(ApplicationDBContext dBContext)
         {
             _dbContext = dBContext;
@@ -404,6 +406,22 @@ namespace TCNX.Controllers
             OptLeft = frm["cmbposition"].ToString();
             string package = frm["cmbpackage"].ToString();
             string packagetype = frm["cmbpackagetype"].ToString();
+            switch (package)
+            {
+                case "50":
+                    packagetype = "1";
+                    break;
+                case "100":
+                    packagetype = "2";
+                    break;
+                case "200":
+                    packagetype = "3";
+                    break;
+                
+            }
+
+          
+               
             string cmbGender = "MALE";
             string spon_name = frm["lblsponsor"].ToString();
             string txtspname = frm["lblsponsor"].ToString();
@@ -624,15 +642,15 @@ namespace TCNX.Controllers
                 string regid = Convert.ToString(dal.ReturnParameter);
                 TempData["MID"] = regid;
 
-                decimal levelamt = Convert.ToDecimal(packageid.packageamt);
+                levelamt = Convert.ToDecimal(packageid.packageamt) ;
                 var mySid = _dbContext.tblregistration.Where(x => x.mid.ToLower() == regid.ToLower()).FirstOrDefault();
                 dal.ClearParameters();
 
-                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount,txthash) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + (regid.ToUpper()) + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Purchase :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.Activate + ",0,1,'dkimg/slip.png',0,0,'" + transid + "')";
+                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount,txthash,payment_id) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + (regid.ToUpper()) + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Purchase :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.InActive + ",1,1,'dkimg/slip.png',0,0,'" + transid + "','" + transid + "')";
                 dal.ExecuteNonQuery(Query, ref Message);
 
                 dal.ClearParameters();
-                Query = "Update tblincome set sponcer=CONVERT(float, sponcer)+" + (levelamt) + ",withdraw=CONVERT(float, withdraw)+" + (levelamt) + " where Mid='" + mySid.sid + "'";
+                Query = "Update tblincome set sponcer=CONVERT(float, sponcer)+" + (Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.1)) + ",withdraw=CONVERT(float, withdraw)+" + (levelamt) + " where Mid='" + mySid.sid + "'";
                 dal.ExecuteNonQuery(Query, ref Message);
 
                 int tid = 1;
@@ -647,9 +665,19 @@ namespace TCNX.Controllers
                 
                 tid = tid + 1;
 
-                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + mySid.sid + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + ",1,' Refferal Income :" + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.05)) + "'," + (int)TrHistoryEnum.SponsorIncome + ",0,1,'dkimg/slip.png',0,0)";
+                Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + mySid.sid + "','" + (regid.ToUpper()) + "'," + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.1)) + ",1,' Refferal Income :" + Convert.ToDecimal(Convert.ToDecimal(levelamt) * Convert.ToDecimal(0.1)) + "'," + (int)TrHistoryEnum.SponsorIncome + ",0,1,'dkimg/slip.png',0,0)";
                 dal.ExecuteNonQuery(Query, ref Message);
 
+
+                try
+                {
+                    level = 1;
+                    calculatelevelincome(regid.ToUpper(), Convert.ToDecimal(levelamt), regid.ToUpper());
+                }
+                catch (Exception ex)
+                {
+
+                }
                 rtnText = "True-Registration Successfully";
 
                 string txtemail_msg = string.Empty;
@@ -716,7 +744,8 @@ namespace TCNX.Controllers
             else
                 return (false);
         }
-        public  ActionResult GetVideoMappingsAsync(IFormCollection frm)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public IActionResult GetVideoMappingsAsync(IFormCollection frm)
         {
             String rtnText = "True-Success";
 
@@ -756,6 +785,167 @@ namespace TCNX.Controllers
 
             return RedirectToAction("Login", "Index");
         }
+
+
+
+        private async Task<bool> calculatelevelincome(string mid, decimal calamt, string regmid)
+        {
+
+            var stopGenerateIncome = _dbContext.tblsetting.FirstOrDefault();
+            if (stopGenerateIncome.status == 0)
+            {
+                return false;
+            }
+            DataTable dt, dt1, dt2, dt3 = new DataTable();
+            decimal pamt = 0;
+            levelamt = 0;
+            int direcrrequired = 1;
+            Query = "Select sid,packageamt from tblRegistration where Mid='" + mid + "'";
+            dt1 = dal.GetTable(Query, ref Message);
+            if (dt1.Rows.Count > 0)
+            {
+
+                decimal amt = calamt;
+                level += 1;
+                switch (level)
+                {
+                    case 1:
+                        levelamt = 0;
+                        break;
+                    //levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.10);
+                    //direcrrequired = 1;
+                    //break;
+                    case 2:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.05);
+                        direcrrequired = 2;
+                        break;
+                    case 3:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.05);
+                        direcrrequired = 3;
+                        break;
+                    case 4:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.05);
+                        direcrrequired = 4;
+                        break;
+                    case 5:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.05);
+                        direcrrequired = 5;
+                        break;
+                    case 6:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.01);
+                        direcrrequired = 6;
+                        break;
+                    case 7:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.01);
+                        direcrrequired = 7;
+                        break;
+                    case 8:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.01);
+                        direcrrequired = 8;
+                        break;
+                    case 9:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.01);
+                        direcrrequired = 9;
+                        break;
+                    case 10:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.01);
+                        direcrrequired = 10;
+                        break;
+                    case 11:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 12:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 13:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 14:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 15:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 16:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 17:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 18:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 19:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                    case 20:
+                        levelamt = Convert.ToDecimal(calamt) * Convert.ToDecimal(0.005);
+                        direcrrequired = 10;
+                        break;
+                }
+                Query = "select count(*) from tbltranshistory where ttype=" + (int)TrHistoryEnum.LevelIncome + " and format(edate,'yyyy-MM-dd')=FORMAT((select growthdate from tbllastpay),'yyyy-MM-dd') and givemid='" + dt1.Rows[0][0].ToString().ToUpper() + "'";
+                int incomecredited = Convert.ToInt32(dal.ExecuteScaler(Query, ref Message));
+
+                // var incomecredited = _dbContext.tbltranshistories.Where(x => x.givemid.ToUpper() == mfacc.mid.ToUpper() && x.ttype == (int)TrHistoryEnum.RechargeIncome && Convert.ToDateTime(x.edate).ToString("yyyy-MM-dd") == Convert.ToDateTime(userInfo.Get_date())).FirstOrDefault();
+                if (levelamt > 0 && incomecredited == 0)
+                {
+                    Query = "Select Count(*) from tblRegistration where activate=1 and upper(Mid)='" + dt1.Rows[0][0].ToString().ToUpper() + "'";
+                    int actcnt = Convert.ToInt32(dal.ExecuteScaler(Query, ref Message));
+
+                    Query = "Select Count(*) from tblRegistration where activate=1 and upper(sid)='" + dt1.Rows[0][0].ToString().ToUpper() + "'";
+                    int sidactcnt = Convert.ToInt32(dal.ExecuteScaler(Query, ref Message));
+
+                    var mfprice = _dbContext.tblsetting.FirstOrDefault().MF_PRICE;
+                    var mfacc = _dbContext.tblregistration.Where(x => x.activate == true && x.packageamt >= 50 && x.mid.ToUpper() == dt1.Rows[0][0].ToString().ToUpper()).FirstOrDefault();
+                    if (mfacc != null)
+                    {
+                        decimal totalminingamount = Convert.ToDecimal(mfacc.miningamt);
+                        if (actcnt > 0 && sidactcnt >= direcrrequired && totalminingamount >=50)
+                        {
+                            Query = "Update tblincome set level=CONVERT(float, bidding)+" + (levelamt) + ",withdraw=CONVERT(float, withdraw)+" + (levelamt) + " where Mid='" + dt1.Rows[0][0] + "'";
+
+                            dal.ExecuteNonQuery(Query, ref Message);
+                            int tid = 0;
+                            tid = _dbContext.tbltranshistory.Max(x => x.tid);
+                            tid = tid + 1;
+
+                            Query = "Insert into tblTransHistory (edate,givemid,takemid,tamount,approvedstatus,status,ttype,bid,type,imgname,deduction,final_amount) values (" + "CAST(SWITCHOFFSET(SYSDATETIMEOFFSET(), '+05:30') AS DATETIME),'" + dt1.Rows[0][0] + "','" + (regmid.ToUpper()) + "'," + Convert.ToDecimal(levelamt) + ",1,' Farm Buying Level Income :" + Convert.ToDecimal(levelamt) + "'," + (int)TrHistoryEnum.LevelIncome + ",0,1,'dkimg/slip.png',0,0)";
+                            dal.ExecuteNonQuery(Query, ref Message);
+                        }
+
+                        dt = new DataTable();
+
+                        Query = "Select sid from tblRegistration where Mid='" + dt1.Rows[0][0] + "'";
+                        dt = dal.GetTable(Query, ref Message);
+                        if (dt.Rows.Count > 0)
+                        {
+                            calculatelevelincome(Convert.ToString(dt1.Rows[0][0]), calamt, regmid);
+                        }
+                    }
+
+
+
+                }
+
+                if (level >= 20)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
+
     }
 }
 
